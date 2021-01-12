@@ -92,5 +92,6 @@ async def on_message(message):
         await message.channel.send(response)
         
 
-client.run('NzYwOTAzODIwODU0NDI3NjUw.X3S05w.H1Z1ITresK4pIvFH3s1Bt8lv8zw')   
+#Add token
+client.run('')   
 
