@@ -70,26 +70,50 @@ async def on_message(message):
         await message.channel.send(response)
 
     if message.content.startswith('!harvest'):
-        response = 'get fucked idiot'
+        response = "you harvest your organs and hold you brain in your hands. It is squishy and wet, as a good, smart girl's brain is. You put it back before you rubb all the memories out of it."
+        Lofi = Query()
+        ID = Query()
+        if (Lofi > 10):      #idk. they backrub their brain and forget a physics equation. 
+          Lofi = Lofi - 10   #You can edit this change to remove it.
+        elif (Lofi > 0):
+          Lofi = 0
+        GCplayers.update(Lofi, ID.id == message.author.id)
         await message.channel.send(response)
+        
+    if message.content.startswith(gccmd.cmmd_prfx + 'goto'):
+      locationsList = ["Mall", "study hall"] #List of all locations
+      member = message.author #The user
+      location = message.content.remove(gccmd.cmmd_prfc + 'goto') #the input with the command removed. Hopefully only the location name
+      role = get(member.guild.roles, name=location.title()) #This should hopefully be the same as just: name="Mall". But they can enter mall or Mall.
+      roles = message.author.roles #list of their roles.
+      for i in range (len(locationsList)): #I dont know if 'For loops' are okay with a bot. But it should be fine cus asyncio...?
+        if (locationsList[i] in roles): #finding which location role the user has.
+          role2 = get(member.guild.roles, name=locationsList[i])
+          i = len(locationsList)
+          await member.remove_roles(role2)
+          await member.add_roles(role)
+      
+          
+      response = 'You begin walking to the ' + location 
+      await message.channel.send(response)
+      
+    #if message.content.startswith(gccmd.cmd_prfx + 'goto' + ' ' + 'mall'):
+        #member = message.author
+        #role = get(member.guild.roles, name="Mall")
+        #role2 = get(member.guild.roles, name="study hall")
+        #response = 'You begin walking to the Mall!'
+        #await member.remove_roles(role2)
+        #await member.add_roles(role)
+        #await message.channel.send(response)
 
-    if message.content.startswith(gccmd.cmd_prfx + 'goto' + ' ' + 'mall'):
-        member = message.author
-        role = get(member.guild.roles, name="Mall")
-        role2 = get(member.guild.roles, name="study hall")
-        response = 'You begin walking to the Mall!'
-        await member.remove_roles(role2)
-        await member.add_roles(role)
-        await message.channel.send(response)
-
-    if message.content.startswith(gccmd.cmd_prfx + 'goto' + ' ' + 'study hall'):
-        member = message.author
-        role = get(member.guild.roles, name="study hall")
-        role2 = get(member.guild.roles, name="Mall")
-        response = 'You begin walking to the study hall!'
-        await member.remove_roles(role2)
-        await member.add_roles(role)
-        await message.channel.send(response)
+    #if message.content.startswith(gccmd.cmd_prfx + 'goto' + ' ' + 'study hall'):
+       # member = message.author
+        #role = get(member.guild.roles, name="study hall")
+        #role2 = get(member.guild.roles, name="Mall")
+        #response = 'You begin walking to the study hall!'
+        #await member.remove_roles(role2)
+        #await member.add_roles(role)
+        #await message.channel.send(response)
         
 
 #Add token
