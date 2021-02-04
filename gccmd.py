@@ -8,6 +8,7 @@ lofi = 'lofi'
 
 #this part assigns locations with their chanenl ID
 study_hall = 788095887884288052
+moonlight_cafe = 805464853967929344
 
 #command responses
 study_response = "You work on your homework while vibing to some nice LoFi beats!"
