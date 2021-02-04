@@ -79,6 +79,24 @@ async def on_message(message):
             response = 'You begin walking to the ' + ' ' + location
         await message.channel.send(response)
         
+    if message.content.startswith(gccmd.cmd_prfx + 'menu') and message.channel.id == gccmd.moonlight_cafe:
+      response = "The man at the counter glares at you. He is wearing a chef's hat and his hands are shaking violently as he drinks from a teacup, full to the brim.\n"+ "strawberry cupcake: 5 money.\n"+ "strawberry: 1 money.\n"+ "cupcake: 3 money\n"
+      await message.channel.send(response)
+    
+    if message.content.startswith(gccmd.cmd_prfx + 'order') and message.channel.id == gccmd.moonlight_cafe:
+      foodNames = ["strawberry cupcake", "strawberry", "cupcake"] #the food items. Their order matches with their prices and responses in the other lists. Same indexes.
+      prices = [5,1,3]
+      foodResponses = ["You recieve a pink cupcake. You're thinking that the fact its strawberry just because its pink is offensive to you until you bite down and discover the TRUE strawberry at the core, hidden. The strawberry is frozen for some reason and is making the cupcake soggy.", "Its a strawberry. You insert it into the inside of your mouth -where you eat it. Yum!", "Its a brown cupcake. Tastes pretty good but its on the dry side. It could use some strawberries."]
+      order = message.content[7:]
+      print(order)
+      if order in foodNames:
+        cost = prices[foodNames.index(order)] #matchin up the values via index.
+        ID = Query()
+        GCplayers.update(subtract('money', cost), ID.id == message.author.id)
+        response = foodResponses[foodNames.index(order)]
+      else:
+        response = "Whats that supposed to be? Go bake it yourself, kid!"
+      await message.channel.send(response)
 
 #Add token
 client.run('')   
