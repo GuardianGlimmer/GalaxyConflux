@@ -11,33 +11,6 @@ GCplayers = TinyDB("C:\\Users\\frost\\Desktop\\GalaxyConflux-main\\GCplayers.jso
 
 client = discord.Client()
 
-
-
-'''
-class gcplayer:
-  _id = ""
-  loc = "study hall"
-  purity = 'pure'
-  lofi = 0
-
-  def __init__(self, _id):
-    self.id = _id
-    ID = Query()
-    result = GCplayers.search(ID.id == _id)
-
-    if result == None:
-i shou      GCplayers.insert({'id': _id, 'location' : 'study hall', 'purity' : 'pure', 'lofi' : 0})
-                       
-  def save(self):
-      p_data = {
-        'lofi' : self.lofi,
-        'loc' : self.loc,
-        'purity' : self.purity,
-      }
-      GCplayers.update({p_data}, self.id == _id)
-'''
-
-
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
@@ -48,10 +21,14 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-
+    message.content = message.content.lower()
     if message.content.startswith(gccmd.cmd_prfx + 'register'):
-        GCplayers.insert({'id': message.author.id, 'location' : 'study hall', 'purity' : 'pure', 'lofi' : 0})
-        
+        ID = Query()
+        if GCplayers.contains(ID.id == message.author.id):
+            await message.channel.send('you already registered')
+        else:
+            GCplayers.insert({'id': message.author.id, 'lofi' : 0, 'money' : 0,})
+            await message.channel.send('You registered!')
     if message.content.startswith(gccmd.cmd_prfx + gccmd.study) and message.channel.id == gccmd.study_hall:
         ID = Query()
         GCplayers.update(increment('lofi'), ID.id == message.author.id)
@@ -73,28 +50,34 @@ async def on_message(message):
         GCplayers.update(subtract('lofi', 10), ID.id == message.author.id)
         await message.channel.send(response)
 
+
+#It is removing the role when the wrong input is given
     if message.content.startswith(gccmd.cmd_prfx + 'goto'):
-        locationsList = ["mall", "study hall"] #List of all locations
+        locationsList = ["mall", "study hall", "cafe", "downtown"] #List of all locations
         member = message.author #The user
         location = message.content[6:] #the input with the command removed. Hopefully only the location name
-        role = get(member.guild.roles, name=location) #This should hopefully be the same as just: name="Mall". But they can enter mall or Mall.
-        roles = []
-        print(roles)
-        for r in message.author.roles:
-            roles.append(r.name) #list of their roles.
-        print(roles)
-        for i in range (len(locationsList)): #I dont know if 'For loops' are okay with a bot. But it should be fine cus asyncio...?
-            print(i)
-            print((locationsList[i]))
-            if (locationsList[i] in roles): #finding which location role the user has.
-                print('yay!')
-                role2 = get(member.guild.roles, name=locationsList[i])
-                i = len(locationsList)
-                await member.remove_roles(role2)
-                await member.add_roles(role)
-        response = 'You begin walking to the ' + ' ' + location
+        if location not in locationsList:
+            response = "i dont know that location!"
+        else:       
+            role = get(member.guild.roles, name=location) #This should hopefully be the same as just: name="Mall". But they can enter mall or Mall.
+            roles = []
+            print(roles)
+            for r in message.author.roles:
+                roles.append(r.name) #list of their roles.
+            print(roles)
+            for i in range (len(locationsList)): #I dont know if 'For loops' are okay with a bot. But it should be fine cus asyncio...?
+                print(i)
+                print((locationsList[i]))
+                if (locationsList[i] in roles): #finding which location role the user has.
+                    print('yay!')
+                    role2 = get(member.guild.roles, name=locationsList[i])
+                    i = len(locationsList)
+                    await member.remove_roles(role2)
+                    print('removed' + str(role2))
+                    await member.add_roles(role)
+                    print('added' + str(role))
+            response = 'You begin walking to the ' + ' ' + location
         await message.channel.send(response)
-
         
 
 #Add token
