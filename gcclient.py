@@ -61,10 +61,6 @@ async def on_message(message):
     if message.content.startswith(gccmd.cmd_prfx + gccmd.lofi):
       Lofi = Query()
       response = GCplayers.search(Lofi.id == message.author.id)
-      if (int(response) < 0):
-        response += ". You feel stressed."
-      elif (int(response) > 100):
-        response += ". You're so chill that the fridge feels like a radiator."
       await message.channel.send(response)
       
     if message.content.startswith(gccmd.cmd_prfx + 'database'):
@@ -99,7 +95,7 @@ async def on_message(message):
         response = 'You begin walking to the ' + ' ' + location
         await message.channel.send(response)
     
-    if message.content.startswith(gccmd.com_prfx + 'menu'):
+    if message.content.startswith(gccmd.com_prfx + 'menu') and message.channel.id == gccmd.moonlight_cafe: #add the id for that channel to gccmd
       #member = message.author
       #role = get(member.guild.roles, name="moonlight cafe")
       #if (role not in message.author.roles): #This is just to make sure they're actually in the cafe
@@ -107,7 +103,7 @@ async def on_message(message):
       response = "The man at the counter glares at you. He is wearing a chef's hat and his hands are shaking violently as he drinks from a teacup, full to the brim.\n"+ "Strawberry cupcake: 5 lofi.\n"+ "Strawberry: 1 lofi.\n"+ "Cupcake: 3 lofi\n"
       await message.channel.send(response)
       
-    if message.content.startswith(gccmd.com_prfc + 'order'):
+    if message.content.startswith(gccmd.com_prfc + 'order') and message.channel.id == gccmd.moonlight_cafe: #add the id for that channel to gccmd
       #member = message.author
       #role = get(member.guild.roles, name="moonlight cafe")
       #if (role not in message.author.roles): #This is just to make sure they're actually in the cafe
@@ -120,7 +116,7 @@ async def on_message(message):
       if (order in foodNames):
         cost = prices[foodNames.index(order)] #matchin up the values via index.
         ID = Query()
-        GCplayers.update(subtract('lofi', cost), ID.id == message.author.id)
+        GCplayers.update(subtract('money', cost), ID.id == message.author.id)
         response = foodResponses[foodNames.index(order)]
       else:
         response = "Whats that supposed to be? Go bake it yourself, kid!"
