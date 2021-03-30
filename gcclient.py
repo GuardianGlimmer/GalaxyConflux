@@ -109,6 +109,26 @@ async def on_message(message):
       else:
         response = "Whats that supposed to be? Go bake it yourself, kid!"
         await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
+        
+    if message.content.startswith(gccmd.cmd_prfx + 'order') and message.channel.id == 798059805172170782:
+      itemNames = ["Unicorn Poop Slime"]
+      prices = [1000]
+      itemResponses = ["You open the pot of Unicorn Poop Slime. You stick a finger in and stretch it out, a whisp of raw desire, it glitters like a beautiful lake under a starry sky. But critically more pink and purple and choking you to death as you carefully pull it out your oseophagus. You make a quick note in your notepad: 'Not food'."]
+      order = message.content[7:]
+      print(order)
+      if order in itemNames:
+        cost = prices[itemNames.index(order)] #matchin up the values via index.
+        ID = Query()
+        money = GCplayers.search(ID.id == message.author.id )
+        if (money < 1000):
+            response = "Your purse flutters by the slightest breeze. You can't afford that."
+            await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
+        GCplayers.update(subtract('money', cost), ID.id == message.author.id)
+        response = itemResponses[itemNames.index(order)]
+        await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
+      else:
+        response = "You cant seem to find that here."
+        await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
 
 #Add token
 client.run('')   
