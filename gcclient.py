@@ -1,10 +1,10 @@
 import discord
 import gccmd
 from tinydb import TinyDB, Query
-from tinydb.operations import increment, subtract
+from tinydb.operations import increment, subtract, add
 import jsons
 from discord.utils import get
-
+import random
 
 #sets up the database
 GCplayers = TinyDB("C:\\Users\\frost\\Desktop\\GalaxyConflux-main\\GCplayers.json")
@@ -32,8 +32,8 @@ async def on_message(message):
     if message.content.startswith(gccmd.cmd_prfx + gccmd.study) and message.channel.id == gccmd.study_hall:
         ID = Query()
         GCplayers.update(increment('lofi'), ID.id == message.author.id)
-        response = "You work on your homework while vibing to some nice LoFi beats!"
-        await message.channel.send(response)
+        #response = "You work on your homework while vibing to some nice LoFi beats!"
+        #await message.channel.send(response)
   
     if message.content.startswith(gccmd.cmd_prfx + gccmd.lofi):
       Lofi = Query()
@@ -42,6 +42,10 @@ async def on_message(message):
       
     if message.content.startswith(gccmd.cmd_prfx + 'database'):
         response = GCplayers.all()
+        await message.channel.send(response)
+
+    if message.content.startswith(gccmd.cmd_prfx + 'map'):
+        response = "mall, study hall, cafe, downtown"
         await message.channel.send(response)
 
     if message.content.startswith('!harvest'):
@@ -82,10 +86,17 @@ async def on_message(message):
     if message.content.startswith(gccmd.cmd_prfx + 'menu') and message.channel.id == gccmd.moonlight_cafe:
       response = "The man at the counter glares at you. He is wearing a chef's hat and his hands are shaking violently as he drinks from a teacup, full to the brim.\n"+ "strawberry cupcake: 5 money.\n"+ "strawberry: 1 money.\n"+ "cupcake: 3 money\n"
       await message.channel.send(response)
-    
+      
+    if message.content.startswith(gccmd.cmd_prfx + 'work') and message.channel.id == 798059805172170782:
+        pay = random.randrange(1, 5)
+        response = "you work long and hard at the mall to earn some cash. you made " + str(pay) + " cash!"
+        ID = Query()
+        GCplayers.update(add('money', pay), ID.id == message.author.id)
+        await message.channel.send(response)
+        
     if message.content.startswith(gccmd.cmd_prfx + 'order') and message.channel.id == gccmd.moonlight_cafe:
       foodNames = ["strawberry cupcake", "strawberry", "cupcake"] #the food items. Their order matches with their prices and responses in the other lists. Same indexes.
-      prices = [5,1,3]
+      prices = [15,10,5]
       foodResponses = ["You recieve a pink cupcake. You're thinking that the fact its strawberry just because its pink is offensive to you until you bite down and discover the TRUE strawberry at the core, hidden. The strawberry is frozen for some reason and is making the cupcake soggy.", "Its a strawberry. You insert it into the inside of your mouth -where you eat it. Yum!", "Its a brown cupcake. Tastes pretty good but its on the dry side. It could use some strawberries."]
       order = message.content[7:]
       print(order)
@@ -99,5 +110,5 @@ async def on_message(message):
       await message.channel.send(response)
 
 #Add token
-client.run('')   
+client.run('NzYwOTAzODIwODU0NDI3NjUw.X3S05w.CZp3-ld_4G9uAaA4YQbchGbtklE')   
 
