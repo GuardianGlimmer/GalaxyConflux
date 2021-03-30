@@ -25,10 +25,10 @@ async def on_message(message):
     if message.content.startswith(gccmd.cmd_prfx + 'register'):
         ID = Query()
         if GCplayers.contains(ID.id == message.author.id):
-            await message.channel.send('you already registered')
+            await message.channel.send('*' + str(message.author.displayname) + ':*' + ' you already registered')
         else:
             GCplayers.insert({'id': message.author.id, 'lofi' : 0, 'money' : 0,})
-            await message.channel.send('You registered!')
+            await message.channel.send('*' + str(message.author.display_name) + ':* ' + 'You registered!')
     if message.content.startswith(gccmd.cmd_prfx + gccmd.study) and message.channel.id == gccmd.study_hall:
         ID = Query()
         GCplayers.update(increment('lofi'), ID.id == message.author.id)
@@ -38,21 +38,21 @@ async def on_message(message):
     if message.content.startswith(gccmd.cmd_prfx + gccmd.lofi):
       Lofi = Query()
       response = GCplayers.search(Lofi.id == message.author.id)
-      await message.channel.send(response)
+      await message.channel.send('*' + str(message.author.display_name) + ':* ' + str(response))
       
     if message.content.startswith(gccmd.cmd_prfx + 'database'):
         response = GCplayers.all()
-        await message.channel.send(response)
+        await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
 
     if message.content.startswith(gccmd.cmd_prfx + 'map'):
         response = "mall, study hall, cafe, downtown"
-        await message.channel.send(response)
+        await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
 
-    if message.content.startswith('!harvest'):
-        response = "you harvest your organs and hold you brain in your hands. It is squishy and wet, as a good, smart girl's brain is. You put it back before you rubb all the memories out of it."
+    '''if message.content.startswith('!harvest'):
+        #response = "you harvest your organs and hold you brain in your hands. It is squishy and wet, as a good, smart girl's brain is. You put it back before you rubb all the memories out of it."
         ID = Query()
-        GCplayers.update(subtract('lofi', 10), ID.id == message.author.id)
-        await message.channel.send(response)
+        GCplayers.update(set('lofi', 10), ID.id == message.author.id)
+        await message.channel.send(response)'''
 
 
 #It is removing the role when the wrong input is given
@@ -81,18 +81,18 @@ async def on_message(message):
                     await member.add_roles(role)
                     print('added' + str(role))
             response = 'You begin walking to the ' + ' ' + location
-        await message.channel.send(response)
+        await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
         
     if message.content.startswith(gccmd.cmd_prfx + 'menu') and message.channel.id == gccmd.moonlight_cafe:
       response = "The man at the counter glares at you. He is wearing a chef's hat and his hands are shaking violently as he drinks from a teacup, full to the brim.\n"+ "strawberry cupcake: 5 money.\n"+ "strawberry: 1 money.\n"+ "cupcake: 3 money\n"
-      await message.channel.send(response)
+      await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
       
     if message.content.startswith(gccmd.cmd_prfx + 'work') and message.channel.id == 798059805172170782:
         pay = random.randrange(1, 5)
         response = "you work long and hard at the mall to earn some cash. you made " + str(pay) + " cash!"
         ID = Query()
         GCplayers.update(add('money', pay), ID.id == message.author.id)
-        await message.channel.send(response)
+        await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
         
     if message.content.startswith(gccmd.cmd_prfx + 'order') and message.channel.id == gccmd.moonlight_cafe:
       foodNames = ["strawberry cupcake", "strawberry", "cupcake"] #the food items. Their order matches with their prices and responses in the other lists. Same indexes.
@@ -105,10 +105,11 @@ async def on_message(message):
         ID = Query()
         GCplayers.update(subtract('money', cost), ID.id == message.author.id)
         response = foodResponses[foodNames.index(order)]
+        await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
       else:
         response = "Whats that supposed to be? Go bake it yourself, kid!"
-      await message.channel.send(response)
+        await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
 
 #Add token
-client.run('NzYwOTAzODIwODU0NDI3NjUw.X3S05w.CZp3-ld_4G9uAaA4YQbchGbtklE')   
+client.run('')   
 
