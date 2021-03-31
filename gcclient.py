@@ -61,7 +61,11 @@ async def on_message(message):
         location = message.content[6:] #the input with the command removed. Hopefully only the location name
         if location not in locationsList:
             response = "i dont know that location!"
-        else:       
+            await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
+        else:
+            response = 'You begin walking to the' + ' ' + location
+            await message.channel.send('*' + str(message.author.display_name) + ':* ' + response + ". it will take 5 seconds")
+            await asyncio.sleep(5)
             role = get(member.guild.roles, name=location) #This should hopefully be the same as just: name="Mall". But they can enter mall or Mall.
             roles = []
             print(roles)
@@ -79,8 +83,6 @@ async def on_message(message):
                     print('removed' + str(role2))
                     await member.add_roles(role)
                     print('added' + str(role))
-            response = 'You begin walking to the ' + ' ' + location
-        await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
         
     if message.content.startswith(gccmd.cmd_prfx + 'menu') and message.channel.id == gccmd.moonlight_cafe:
       response = "The man at the counter glares at you. He is wearing a chef's hat and his hands are shaking violently as he drinks from a teacup, full to the brim.\n"+ "strawberry cupcake: 5 money.\n"+ "strawberry: 1 money.\n"+ "cupcake: 3 money\n"
