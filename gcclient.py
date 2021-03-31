@@ -34,6 +34,10 @@ async def on_message(message):
     if message.content.startswith(gccmd.cmd_prfx + gccmd.lofi):
       response = "You have {} lofi.".format(gcdb.getPlayerAttribute(message.author.id, 'lofi'))
       await message.channel.send('*' + str(message.author.display_name) + ':* ' + str(response))
+
+    if message.content.startswith(gccmd.cmd_prfx + gccmd.money):
+      response = "You have {} currency.".format(gcdb.getPlayerAttribute(message.author.id, 'money'))
+      await message.channel.send('*' + str(message.author.display_name) + ':* ' + str(response))
       
     if message.content.startswith(gccmd.cmd_prfx + 'database'):
         response = GCplayers.all()
