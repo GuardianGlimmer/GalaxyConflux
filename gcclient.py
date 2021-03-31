@@ -1,13 +1,12 @@
 import discord
 import gccmd
-from tinydb import TinyDB, Query
-from tinydb.operations import increment, subtract, add
-import jsons
+import gcdb
+from tinydb import TinyDB
 from discord.utils import get
 import random
 
 #sets up the database
-GCplayers = TinyDB("C:\\Users\\frost\\Desktop\\GalaxyConflux-main\\GCplayers.json")
+GCplayers = TinyDB("./GCplayers.json")
 
 client = discord.Client()
 
@@ -16,28 +15,24 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(client))
     
 @client.event
-
-
 async def on_message(message):
     if message.author == client.user:
         return
     message.content = message.content.lower()
     if message.content.startswith(gccmd.cmd_prfx + 'register'):
-        ID = Query()
-        if GCplayers.contains(ID.id == message.author.id):
+        if gcdb.getPlayerAttribute(message.author.id, 'id'):
             await message.channel.send('*' + str(message.author.displayname) + ':*' + ' you already registered')
         else:
-            GCplayers.insert({'id': message.author.id, 'lofi' : 0, 'money' : 0,})
+            gcdb.createEntry(message.author.id)
             await message.channel.send('*' + str(message.author.display_name) + ':* ' + 'You registered!')
     if message.content.startswith(gccmd.cmd_prfx + gccmd.study) and message.channel.id == gccmd.study_hall:
-        ID = Query()
-        GCplayers.update(increment('lofi'), ID.id == message.author.id)
+        currentLofi = int(gcdb.getPlayerAttribute(message.author.id, 'lofi'))
+        gcdb.setPlayerAttribute(message.author.id, 'lofi', currentLofi + 1)
         #response = "You work on your homework while vibing to some nice LoFi beats!"
         #await message.channel.send(response)
   
     if message.content.startswith(gccmd.cmd_prfx + gccmd.lofi):
-      Lofi = Query()
-      response = GCplayers.search(Lofi.id == message.author.id)
+      response = "You have {} lofi.".format(gcdb.getPlayerAttribute(message.author.id, 'lofi'))
       await message.channel.send('*' + str(message.author.display_name) + ':* ' + str(response))
       
     if message.content.startswith(gccmd.cmd_prfx + 'database'):
@@ -89,27 +84,31 @@ async def on_message(message):
       
     if message.content.startswith(gccmd.cmd_prfx + 'work') and message.channel.id == 798059805172170782:
         pay = random.randrange(1, 5)
+        total = pay + gcdb.getPlayerAttribute(message.author.id, 'money')
         response = "you work long and hard at the mall to earn some cash. you made " + str(pay) + " cash!"
-        ID = Query()
-        GCplayers.update(add('money', pay), ID.id == message.author.id)
+        gcdb.setPlayerAttribute(message.author.id, 'money', total)
         await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
         
     if message.content.startswith(gccmd.cmd_prfx + 'order') and message.channel.id == gccmd.moonlight_cafe:
       foodNames = ["strawberry cupcake", "strawberry", "cupcake"] #the food items. Their order matches with their prices and responses in the other lists. Same indexes.
-      prices = [15,10,5]
+      prices = [15,10,5]  # Food/Prices/Descriptions should be defined at the base of a file, defining each time something runs is a little slow
       foodResponses = ["You recieve a pink cupcake. You're thinking that the fact its strawberry just because its pink is offensive to you until you bite down and discover the TRUE strawberry at the core, hidden. The strawberry is frozen for some reason and is making the cupcake soggy.", "Its a strawberry. You insert it into the inside of your mouth -where you eat it. Yum!", "Its a brown cupcake. Tastes pretty good but its on the dry side. It could use some strawberries."]
       order = message.content[7:]
       print(order)
       if order in foodNames:
         cost = prices[foodNames.index(order)] #matchin up the values via index.
-        ID = Query()
-        GCplayers.update(subtract('money', cost), ID.id == message.author.id)
-        response = foodResponses[foodNames.index(order)]
-        await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
+        wallet = gcdb.getPlayerAttribute(message.author.id, 'money')
+        if wallet - cost >= 0:
+            gcdb.setPlayerAttribute(message.author.id, 'money', wallet - cost)
+            response = foodResponses[foodNames.index(order)]
+            await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
+        else:
+            response = "Now just how do you plan to pay for that? You only gave me {} money!".format(wallet)
+            await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
       else:
         response = "Whats that supposed to be? Go bake it yourself, kid!"
         await message.channel.send('*' + str(message.author.display_name) + ':* ' + response)
 
 #Add token
-client.run('')   
+client.run('')
 
