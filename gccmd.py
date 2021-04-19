@@ -3,6 +3,7 @@ import random
 import discord
 import asyncio
 from tinydb import TinyDB
+from gcclasses import GCPlayer
 
 GCplayers = TinyDB("./GCplayers.json")
 
@@ -150,11 +151,10 @@ async def work_cmd(msg):
     Setup the user's database entry if they have none
 '''
 async def register_cmd(msg):
-    if gcdb.getPlayerAttribute(msg.author.id, 'id'):
-        await msg.channel.send('*' + str(msg.author.display_name) + ':*' + ' you already registered')
-    else:
-        gcdb.createEntry(msg.author.id)
+    if GCPlayer(userid=msg.author.id).new:
         await msg.channel.send('*' + str(msg.author.display_name) + ':* ' + 'You registered!')
+    else:
+        await msg.channel.send('*' + str(msg.author.display_name) + ':*' + ' you already registered')
 
 '''
     Return the entire database as text for debugging

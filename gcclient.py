@@ -21,5 +21,5 @@ async def on_message(message):
             await gccmd.cmd_dict[term](message)
 
 #Add token
-client.run('')
+client.run('NTkyMTY5Mjg4ODU3NTUwODQ4.XQ7bKg.0QLoM3J0yFki_PN3HWJk8t3yjLM')
 
