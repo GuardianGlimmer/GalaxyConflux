@@ -154,7 +154,7 @@ async def look_cmd(msg):
     if: msg.channel.id == mall_channel_id:
         response = "You are in the middle of a gigantic masterpiece of design and architecture from the construction boom that happened forty years ago. The flashing lights of all the ads for amazing products, the fancy-looking window displays, the sweet melodies that go from the speakers to your ears and the always moving people mass are turning your brain into the always-consuming machine is supposed to be, making you feel slightly dizzy. Down in the hallways you find your local gig where you can **~work** in. You will have to move with your elbows through the shopper stampede to arrive there, though."
     else:
-        respones = "You are sitting in front of your parents' PC. There's a cup with some hot brew you made that you can't recall if it was tea or coffee, but it's gotten cold so who cares. You have bags under your eyes. You've been looking at this PC for way too long."
+        response = "You are sitting in front of your parents' PC. There's a cup with some hot brew you made that you can't recall if it was tea or coffee, but it's gotten cold so who cares. You have bags under your eyes. You've been looking at this PC for way too long."
         
 '''
     Pays user per command, if done in mall
