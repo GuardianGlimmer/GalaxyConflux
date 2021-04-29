@@ -1,7 +1,8 @@
 from tinydb import TinyDB, where
 from tinydb.operations import increment, subtract, add, set
 
-GCplayers = TinyDB("./GCplayers.json")
+
+GCplayers = TinyDB("./database/GCplayers.json")
 
 '''
     Retrieves a single passed attribute for a particular player
@@ -48,3 +49,4 @@ def getPlayerData(userid):
         return (data[0])
     else:
         return False
+
