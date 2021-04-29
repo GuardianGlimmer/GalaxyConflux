@@ -173,7 +173,7 @@ async def work_cmd(msg):
 '''
 async def transform_cmd(msg): #In the future I'll turn it into a tag, for now it is just hard to unlock flavor text
     currentLofi = int(gcdb.getPlayerAttribute(msg.author.id, 'lofi'))
-    if currentLofi >= 1000000
+    if currentLofi >= 1000000:
         response = "Epic orchestral music starts to sound. You summon the power of friendship and love and scream your magical girl name with all your soul. Your regular student clothes begin to disappear to reveal a super cute outfit without ever showing anything NSFW to the camera. People around you are hypnotized by this transformation, you notice that thanks to the 'Damns' and 'Holy fucks' they let out. You are a magical girl now, go kick some bad guy's ass!"  
     elif currentLofi >= 100000:
         response = "you focus REALLY hard, and feel a breeze whip around you! ... but nothing really happened... so close..."
