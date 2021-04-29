@@ -1,0 +1,26 @@
+{
+    "mall": {
+        "full_name": "the mall",
+        "role_name": "Mall",
+        "location_names": ["mall"],
+        "look_txt": "You are in the middle of a gigantic masterpiece of design and architecture from the construction boom that happened forty years ago. The flashing lights of all the ads for amazing products, the fancy-looking window displays, the sweet melodies that go from the speakers to your ears and the always moving people mass are turning your brain into the always-consuming machine is supposed to be, making you feel slightly dizzy. Down in the hallways you find your local gig where you can **~work** in. You will have to move with your elbows through the shopper stampede to arrive there, though."
+    }, 
+    "study-hall": {
+        "full_name": "Study Hall",
+        "role_name": "Study Hall",
+        "location_names": ["studyhall", "study hall"],
+        "look_txt": "You find yourself in a modern, white, well-lighted library with massive windows that show a precious city view. Here all the students in the city amass books and knowledge to pass their exams and reach their dreams! The massive shelves that reach this place's ceiling are full of all kinds of books: big books, thin books, old books, new books... This is definitely a good place to **~study** in, if you focus and keep yourself quiet!"
+    }, 
+    "cafe": {
+        "full_name": "the Moonlight Cafe",
+        "role_name": "Moonlight Cafe",
+        "location_names": ["cafe", "moonlight cafe"],
+        "look_txt": "You find yourself in a small and clean cafe with wooden furniture and some comfy sofas. This hipster-looking cafeteria was recently bought by a young long-bearded guy with prominent arm tattoos who's highest aspiration in life was to run his own coffee shop. The walls have some posters of old movies you haven't seen but you guess they're good, because if they weren't the man running this place wouldn't have put them there. On one side of the room, near the sofas, there are two small shelves: One containing old vinyl records that are the background music of the place, and another one containing 80s Japanese manga that the costumers can read while eating. They're mostly mahō shōjo series. Weirdly specific, you think."
+    },  
+    "downtown": {
+        "full_name": "downtown",
+        "role_name": "Downtown",
+        "location_names": ["downtown", "dt"],
+        "look_txt": "You are in the city center, the heart of Phonosia. With daylight its full of salary men on their way to the office to do 'serious business' and scholars going to school (duh). But on the nighttime, the clubs and discos in the area open to their drunken regulars, lighting with neon dye the city's skyscrapers. Lately a rumour has arisen saying that here, at night, avoiding the young ravers and the old alcoholics, a fight between the forces of good and bad takes place, where monsters are fought by unknown yet powerful individuals. Of course, the city's authorities have qualified this rumour of 'just another urban legend'."
+    }
+}

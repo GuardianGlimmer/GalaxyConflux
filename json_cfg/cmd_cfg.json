@@ -1,0 +1,46 @@
+{
+    "study_cmd": {
+        "command_names": ["study"],
+        "function" : "study_cmd"
+    },
+    "lofi_cmd": {
+        "command_names": ["lofi"],
+        "function" : "lofi_cmd"
+    },
+    "money_cmd": {
+        "command_names": ["money"],
+        "function" : "money_cmd"
+    },
+    "work_cmd": {
+        "command_names": ["work"],
+        "function" : "work_cmd"
+    },
+    "goto_cmd": {
+        "command_names": ["goto"],
+        "function" : "goto_cmd"
+    },
+    "look_cmd": {
+        "command_names": ["look"],
+        "function" : "look_cmd"
+    },
+    "order_cmd": {
+        "command_names": ["order"],
+        "function" : "order_cmd"
+    },
+    "menu_cmd": {
+        "command_names": ["menu"],
+        "function" : "menu_cmd"
+    },
+    "transform_cmd": {
+        "command_names": ["transform", "mtf"],
+        "function" : "transform_cmd"
+    },
+    "db_cmd": {
+        "command_names": ["database"],
+        "function" : "db_cmd"
+    },
+    "map_cmd": {
+        "command_names": ["map"],
+        "function" : "map_cmd"
+    }
+}
