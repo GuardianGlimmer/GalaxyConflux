@@ -145,17 +145,18 @@ async def goto_cmd(msg):
     Allows people to look where they are
 '''
 async def look_cmd(msg):
-    if: msg.channel.id == downtown_channel_id:
+    if msg.channel.id == downtown_channel_id:
         response = "You are in the city center, the heart of Phonosia. With daylight its full of salary men on their way to the office to do 'serious business' and scholars going to school (duh). But on the nighttime, the clubs and discos in the area open to their drunken regulars, lighting with neon dye the city's skyscrapers. Lately a rumour has arisen saying that here, at night, avoiding the young ravers and the old alcoholics, a fight between the forces of good and bad takes place, where monsters are fought by unknown yet powerful individuals. Of course, the city's authorities have qualified this rumour of 'just another urban legend'."
-    if: msg.channel.id == study_hall_channel_id:
+    elif msg.channel.id == study_hall_channel_id:
         response = "You find yourself in a modern, white, well-lighted library with massive windows that show a precious city view. Here all the students in the city amass books and knowledge to pass their exams and reach their dreams! The massive shelves that reach this place's ceiling are full of all kinds of books: big books, thin books, old books, new books... This is definitely a good place to **~study** in, if you focus and keep yourself quiet!"
-    if: msg.channel.id == moonlight_cafe_channel_id:
+    elif msg.channel.id == moonlight_cafe_channel_id:
         response = "You find yourself in a small and clean cafe with wooden furniture and some comfy sofas. This hipster-looking cafeteria was recently bought by a young long-bearded guy with prominent arm tattoos who's highest aspiration in life was to run his own coffee shop. The walls have some posters of old movies you haven't seen but you guess they're good, because if they weren't the man running this place wouldn't have put them there. On one side of the room, near the sofas, there are two small shelves: One containing old vinyl records that are the background music of the place, and another one containing 80s Japanese manga that the costumers can read while eating. They're mostly mahō shōjo series. Weirdly specific, you think."
-    if: msg.channel.id == mall_channel_id:
+    elif msg.channel.id == mall_channel_id:
         response = "You are in the middle of a gigantic masterpiece of design and architecture from the construction boom that happened forty years ago. The flashing lights of all the ads for amazing products, the fancy-looking window displays, the sweet melodies that go from the speakers to your ears and the always moving people mass are turning your brain into the always-consuming machine is supposed to be, making you feel slightly dizzy. Down in the hallways you find your local gig where you can **~work** in. You will have to move with your elbows through the shopper stampede to arrive there, though."
     else:
         response = "You are sitting in front of your parents' PC. There's a cup with some hot brew you made that you can't recall if it was tea or coffee, but it's gotten cold so who cares. You have bags under your eyes. You've been looking at this PC for way too long."
-        
+    await msg.channel.send('*' + str(msg.author.display_name) + ':* ' + response)
+    
 '''
     Pays user per command, if done in mall
 '''
@@ -171,11 +172,21 @@ async def work_cmd(msg):
     Allows the user to see their transformation into a magical girl
 '''
 async def transform_cmd(msg): #In the future I'll turn it into a tag, for now it is just hard to unlock flavor text
-    if: currentLofi >= 1000000
+    currentLofi = int(gcdb.getPlayerAttribute(msg.author.id, 'lofi'))
+    if currentLofi >= 1000000
         response = "Epic orchestral music starts to sound. You summon the power of friendship and love and scream your magical girl name with all your soul. Your regular student clothes begin to disappear to reveal a super cute outfit without ever showing anything NSFW to the camera. People around you are hypnotized by this transformation, you notice that thanks to the 'Damns' and 'Holy fucks' they let out. You are a magical girl now, go kick some bad guy's ass!"  
+    elif currentLofi >= 100000:
+        response = "you focus REALLY hard, and feel a breeze whip around you! ... but nothing really happened... so close..."
+    elif currentLofi >= 10000:
+        response = "you spin in place, really believing this time it will work!!! \n you fall over into your chair, having only **transformed** your hair into a big mess"
+    elif currentLofi >= 1000:
+        response = "you clasp your hands and look up to the sky, the moon reflected in your big eyes. you feel tingly!!! \n .... its just because you have been sitting too long..."
+    elif currentLofi >= 100:
+        response = "you grab your pen and poirouette around the room! you jump off your bed ready to take flight and- \n you fall onto the conveniently placed beanbag. nope, cant fly yet."
     else:
-        response = "You focus but when you try transforming yourself into the magical girl you truly are, you faint for a second. You will need some more lofi to do this! ({}/1000000 lofi)".format(gcdb.getPlayerAttribute(msg.author.id, 'lofi'))
-        
+        response = "you spin around your room, your beautiful Guardian Garb flowing around you, those bad guys better watch out!!! \n... ok time to stop playing pretend and get out of this cheap cosplay gear."
+    await msg.channel.send('*' + str(msg.author.display_name) + ':* ' + response)
+    
 '''
     Setup the user's database entry if they have none
 '''
