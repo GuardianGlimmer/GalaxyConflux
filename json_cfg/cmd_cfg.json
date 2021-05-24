@@ -42,5 +42,13 @@
     "map_cmd": {
         "command_names": ["map"],
         "function" : "map_cmd"
+    },
+    "cast_cmd": {
+        "command_names": ["cast"],
+        "function" : "cast_cmd"
+    },
+    "reel_cmd": {
+        "command_names": ["cast"],
+        "function" : "reel_cmd"
     }
 }
