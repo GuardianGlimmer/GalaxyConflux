@@ -19,31 +19,34 @@ async def cast_cmd(msg):
       		if msg.message.author.id not in fishers.keys():
 			fishers[cmd.message.author.id] = EWFisher()
 		fisher = fishers[msg.message.author.id]
-		prompts = random.randomrandint(1, 10)
-      		reward = prompts * random.randint(10, 20)
+		fisher.prompts = random.randomrandint(1, 10)
+      		fisher.reward = fisher.prompts * random.randint(10, 20)
       		while funnything = True:
-        		if prompts > 0:
+        		if fisher.prompts > 0:
 				await asyncio.sleep(10)
 				response = random.choice("you wiggle your legs as they hang off the boardwalk. what a lovely time", "You watch the hot dog vendor give away a free hot dog. how kind!", "you see a little girl carrying around a teddbear larger than her!")
 				await sent_message(msg, response)
 				prompts -= 1
+				continue
 				  
         		else:
 				fisher.bite = True
 				response = "you feel a pull on your line! **~REEL NOW!**"
-				awaut sent_message(msg, response)
+				await sent_message(msg, response)
 				await asyncio.sleep(6)
 			
 			  	#missing a reel gives half the reward
           			if fisher.bite != False:
-					response = "the fish got away... but you still got " + str(reward / 2) + " lofi!"
-				    	player.lofi += (reward / 2)
+					response = "the fish got away...\nbut you still got " + str(fisher.reward / 2) + " lofi!"
+				    	player.lofi += (fisher.reward / 2)
 					fisher.stop()
+					break
 				#getting a reel gets you the full reward + 50 bonus
           			else:
-					response = "you reel in a cute little fish, carefully unhooking it and healing its wounds with your magic before throwing it back. \n you gained " + str(reward + 50) + "Lofi!"
-   					player.lofi += (reward + 50)
+					response = "you reel in a cute little fish, carefully unhooking it and healing its wounds with your magic before throwing it back. \n you gained " + str(fisher.reward + 50) + "Lofi!"
+   					player.lofi += (fisher.reward + 50)
 					fisher.stop()
+					break
  '''
     Lets users reel in fish
  '''
