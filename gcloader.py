@@ -95,4 +95,4 @@ async def generate_role_map():
                 print(f"created role {role.name}")
 
 
-    #pprint(gccfg.role_map)
+    #print(gccfg.role_map)

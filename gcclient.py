@@ -36,11 +36,11 @@ async def on_message(message):
             pass
 
 # read token file
-f = open("token")
-token = f.readline().strip()
+#f = open("token")
+#token = f.readline().strip()
 
 # connect to discord
 try:
-	client.run(token)
+	client.run("NzYwOTAzODIwODU0NDI3NjUw.X3S05w.f3s4sB8isYJqXYH-xpa8e_O8-94")
 except:
-    print("could not connect to discord with token")
+    print("NzYwOTAzODIwODU0NDI3NjUw.X3S05w.f3s4sB8isYJqXYH-xpa8e_O8-94")

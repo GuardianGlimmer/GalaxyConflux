@@ -15,7 +15,7 @@ async def update_member_role(member):
     
     roles_to_remove = []
     for role in member.roles:
-        if role.name != "@everyone":
+        if role.name != "@everyone" and role.name != "Hall Monitor" and role.name != "School girl":
             roles_to_remove.append(role)
 
     #print(roles_to_remove)
@@ -27,9 +27,7 @@ async def update_member_role(member):
     location_role = gccfg.role_map.get(player_data.location)
     if location_role != None:
         roles_to_add.append(location_role)
-
     
-    roles_to_add.append(gccfg.role_map.get("School Girl"))
 
     #print(roles_to_add)
     await member.add_roles(*roles_to_add)

@@ -48,7 +48,7 @@
         "function" : "cast_cmd"
     },
     "reel_cmd": {
-        "command_names": ["cast"],
+        "command_names": ["reel"],
         "function" : "reel_cmd"
     }
 }

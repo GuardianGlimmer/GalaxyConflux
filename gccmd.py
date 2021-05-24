@@ -3,10 +3,14 @@ import gcdb
 import random
 import discord
 import asyncio
-from gcclasses import GCPlayer
+from gcclasses import GCPlayer, GCFisher
+import gcclasses
 
 from gcutility import sent_message, update_member_role
 
+funnything = True
+fishers = {}
+fishingresponses = ["you wiggle your legs as they hang off the boardwalk. what a lovely time", "You watch the hot dog vendor give away a free hot dog. how kind!", "you see a little girl carrying around a teddybear larger than her!"]
 GCplayers = gcdb.GCplayers
 
 # Define commands
@@ -14,6 +18,9 @@ GCplayers = gcdb.GCplayers
     Adds 1 to lofi when sent in the study channel
 '''
 async def study_cmd(msg):
+	response = "What are you doing studying? Schools out for the summer!"
+	await sent_message(msg, response)
+	'''
     #check if player is in proper channel
     if msg.channel.id == gccfg.location_map.get("study-hall").channel_id:
         #add 1 lofi
@@ -21,7 +28,7 @@ async def study_cmd(msg):
         player.lofi += 1
         player.persist()
     #TODO: add a response when players are in the wrong channel
-        
+	   '''  
 '''
     Shows user their current lofi
 '''
@@ -115,7 +122,7 @@ async def goto_cmd(msg):
 
         # change database location
         player = GCPlayer(msg.author.id)
-        player.location = found_location.id
+        player.location =  found_location.id
         player.persist()
 
         # update member roles
@@ -193,6 +200,93 @@ async def db_cmd(msg):
 '''
 async def map_cmd(msg):
     #TODO: generate list from location_map
-    response = "mall, study hall, cafe, downtown"
+    response = "mall, study hall, cafe, downtown, boardwalk"
     await sent_message(msg, response)
 
+'''
+    Casts a line into the sea
+'''
+async def cast_cmd(msg):
+	if msg.channel.id != gccfg.location_map.get("the-boardwalk").channel_id:
+		response = "sorry, but you cant fish here! try going to the boardwalk."
+	else:
+		player = GCPlayer(msg.author.id)
+		if msg.author.id not in fishers.keys():
+			fishers[msg.author.id] = GCFisher()
+		fisher = fishers[msg.author.id]
+		if fisher.fishing == True:
+			response = "You are already fishing."
+			await sent_message(msg, response)
+		else:
+			fisher.fishing = True
+			fisher.prompts = random.randrange(1, 10)
+			fisher.reward = fisher.prompts * random.randrange(10, 20)
+			response = "You take one of the free fishing lines and cast it out into the gentle waves"
+			await sent_message(msg, response)
+			await asyncio.sleep(15)
+			
+			while funnything is True:
+				if fisher.prompts > 0:
+					response = random.choice(fishingresponses)
+					await sent_message(msg, response)
+					fisher.prompts -= 1
+					await asyncio.sleep(15)
+					continue
+				else:
+					fisher.bite = True
+					response = "you feel a pull on your line! **~REEL NOW!**"
+					await sent_message(msg, response)
+					await asyncio.sleep(5)
+					
+					if fisher.bite != False:
+						response = "The fish got away...\nBut you still got " + str(fisher.reward / 2) + " Lofi!"
+						await sent_message(msg, response)
+						player.lofi += (fisher.reward / 2)
+						fisher.stop()
+						player.persist()
+						break
+					else:
+						response = "you reel in a cute little fish, carefully unhooking it and healing its wounds with your magic before throwing it back. \nYou gained " + str(fisher.reward + 50) + " Lofi!"
+						await sent_message(msg, response)
+						player.lofi += (fisher.reward + 50)
+						fisher.stop()
+						player.persist()
+						break
+				
+'''
+	Lets users reel in fish
+'''
+async def reel_cmd(msg):
+	player = GCPlayer(msg.author.id)
+	if msg.author.id not in fishers.keys():
+		fishers[msg.author.id] = GCFisher()
+	fisher = fishers[msg.author.id]
+	if msg.channel.id != gccfg.location_map.get("the-boardwalk").channel_id:
+		response = "Sorry, but you cant fish here! try going to the boardwalk."
+		await sent_message(msg, response)
+	elif fisher.bite != True:
+		response = "You havn't caught anything yet..."
+		await sent_message(msg, response)
+	else:
+		fisher.bite = False
+		response = "You grip your rod and pull with all your might!"
+		await sent_message(msg, response)
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
