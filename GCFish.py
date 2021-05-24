@@ -38,10 +38,12 @@ async def cast_cmd(msg):
           			if fisher.bite != False:
 					response = "the fish got away... but you still got " + str(reward / 2) + " lofi!"
 				    	player.lofi += (reward / 2)
+					fisher.stop()
 				#getting a reel gets you the full reward + 50 bonus
           			else:
 					response = "you reel in a cute little fish, carefully unhooking it and healing its wounds with your magic before throwing it back. \n you gained " + str(reward + 50) + "Lofi!"
    					player.lofi += (reward + 50)
+					fisher.stop()
  '''
     Lets users reel in fish
  '''
