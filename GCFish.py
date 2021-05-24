@@ -26,7 +26,7 @@ async def cast_cmd(msg):
 				await asyncio.sleep(10)
 				response = random.choice("you wiggle your legs as they hang off the boardwalk. what a lovely time", "You watch the hot dog vendor give away a free hot dog. how kind!", "you see a little girl carrying around a teddbear larger than her!")
 				await sent_message(msg, response)
-				prompts -= 1
+				fisher.prompts -= 1
 				continue
 				  
         		else:
