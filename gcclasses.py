@@ -98,3 +98,18 @@ class GCLocation:
             print(f"{self.id} location has no look text")
         if (self.channel_id == None):
             print(f"there is no #{self.id} channel")
+            
+            
+class GCFisher:
+    Fishing = False
+    bite = False
+	fishing_id = 0
+    prompts = 0
+    reward = 0
+    
+    def stop(self): 
+		self.fishing = False
+		self.bite = False
+        self.fishing_id = 0
+        self.prompts = 0
+        self.reward = 0
