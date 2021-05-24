@@ -22,5 +22,12 @@
         "role_name": "Downtown",
         "location_names": ["downtown", "dt"],
         "look_txt": "You are in the city center, the heart of Phonosia. With daylight its full of salary men on their way to the office to do 'serious business' and scholars going to school (duh). But on the nighttime, the clubs and discos in the area open to their drunken regulars, lighting with neon dye the city's skyscrapers. Lately a rumour has arisen saying that here, at night, avoiding the young ravers and the old alcoholics, a fight between the forces of good and bad takes place, where monsters are fought by unknown yet powerful individuals. Of course, the city's authorities have qualified this rumour of 'just another urban legend'."
+    },
+    "the-boardwalk":
+    {
+        "full_name": "the boardwalk",
+        "role_name": "boardwalk",
+        "location_names": ["boardwalker", "the boardwalk", "board walk", "the board walk", "bw", "tbw"],
+        "look_txt": "You are standing on a long boardwalk that has various booths and carnival ganes everywhere. The delicious smell of corn dogs and various foods fill your nostrils. there are a few spots to fish."
     }
 }
