@@ -46,6 +46,13 @@ async def money_cmd(msg):
     await sent_message(msg, response)
 
 '''
+	Shows user their current hunger
+'''
+async def hunger_cmd(msg):
+	player = GCPlayer(msg.author.id)
+	response = "You are {} % hungry.".format(player.hunger)
+	await sent_message(msg, response)
+'''
     Shows user what is for sale at the cafe
 '''
 async def menu_cmd(msg):
@@ -63,18 +70,25 @@ async def order_cmd(msg):
     prices = [15, 10, 5]  # Food/Prices/Descriptions should be defined at the base of a file, defining each time something runs is a little slow
     foodResponses = ["You recieve a pink cupcake. You're thinking that the fact its strawberry just because its pink is offensive to you until you bite down and discover the TRUE strawberry at the core, hidden. The strawberry is frozen for some reason and is making the cupcake soggy.", "Its a strawberry. You insert it into the inside of your mouth -where you eat it. Yum!",
                      "Its a brown cupcake. Tastes pretty good but its on the dry side. It could use some strawberries."]
+	foodValues = [25, 15, 5]
     order = msg.content.split(' ', 1)[1] # splits the text into a list of two strings at the first " "
 
     # Ensure food exists
     if order in foodNames:
         # Check price
         cost = prices[foodNames.index(order)]  # matchin up the values via index.
+		filling = foodValues[foodNames.index(order)]
         wallet = gcdb.getPlayerAttribute(msg.author.id, 'money')
+		stomach = gcdb.setPlayerAttribute(msg.author.id, 'hunger')
         if wallet - cost >= 0:
             # Subtract cost and send response if they can afford it
             gcdb.setPlayerAttribute(msg.author.id, 'money', wallet - cost)
-            response = foodResponses[foodNames.index(order)]
-            await sent_message(msg, response)
+			if stomach - filling == 0:
+				gcdb.setPlayerAttribute(msg.author.id, 'hunger', 0)
+			else:
+				gcdb.setPlayerAttribute(msg.author.id, 'hunger', stomach - filling)
+				response = foodResponses[foodNames.index(order)]
+				await sent_message(msg, response)
         else:
             # Tell them if they're a broke ass bitch
             response = "Now just how do you plan to pay for that? You only gave me {} money!".format(wallet)
@@ -218,6 +232,8 @@ async def cast_cmd(msg):
 			response = "You are already fishing."
 			await sent_message(msg, response)
 		else:
+			stomach = gcdb.setPlayerAttribute(msg.author.id, 'hunger')
+			gcdb.setPlayerAttribute(msg.author.id, 'hunger', stomach + 15)
 			fisher.fishing = True
 			fisher.prompts = random.randrange(1, 10)
 			fisher.reward = fisher.prompts * random.randrange(10, 20)
@@ -241,14 +257,14 @@ async def cast_cmd(msg):
 					if fisher.bite != False:
 						response = "The fish got away...\nBut you still got " + str(fisher.reward / 2) + " Lofi!"
 						await sent_message(msg, response)
-						player.lofi += (fisher.reward / 2)
+						player.lofi += int(fisher.reward / 2)
 						fisher.stop()
 						player.persist()
 						break
 					else:
 						response = "you reel in a cute little fish, carefully unhooking it and healing its wounds with your magic before throwing it back. \nYou gained " + str(fisher.reward + 50) + " Lofi!"
 						await sent_message(msg, response)
-						player.lofi += (fisher.reward + 50)
+						player.lofi += int(fisher.reward + 50)
 						fisher.stop()
 						player.persist()
 						break
