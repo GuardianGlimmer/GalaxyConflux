@@ -83,7 +83,7 @@ async def order_cmd(msg):
         if wallet - cost >= 0:
             # Subtract cost and send response if they can afford it
             gcdb.setPlayerAttribute(msg.author.id, 'money', wallet - cost)
-			if stomach - filling == 0:
+			if stomach - filling <= 0:
 				gcdb.setPlayerAttribute(msg.author.id, 'hunger', 0)
 			else:
 				gcdb.setPlayerAttribute(msg.author.id, 'hunger', stomach - filling)
@@ -231,13 +231,16 @@ async def cast_cmd(msg):
 		if fisher.fishing == True:
 			response = "You are already fishing."
 			await sent_message(msg, response)
+		if gcdb.setPlayerAttribute(msg.author.id, 'hunger') >= 100:
+			response = "You are too hungry to fish right now."
+			await sent_message(msg, response)
 		else:
 			stomach = gcdb.setPlayerAttribute(msg.author.id, 'hunger')
 			gcdb.setPlayerAttribute(msg.author.id, 'hunger', stomach + 15)
 			fisher.fishing = True
 			fisher.prompts = random.randrange(1, 10)
 			fisher.reward = fisher.prompts * random.randrange(10, 20)
-			response = "You take one of the free fishing lines and cast it out into the gentle waves"
+			response = "You take one of the free fishing lines and cast it out into the gentle waves."
 			await sent_message(msg, response)
 			await asyncio.sleep(15)
 			
