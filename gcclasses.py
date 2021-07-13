@@ -16,7 +16,8 @@ class GCPlayer:
         location = "downtown",
         purity = "pure",
         lofi = 0,
-        money = 0
+        money = 0,
+        hunger = 0
     ):
         # Check for and possibly load saved data
         SavedData = gcdb.getPlayerData(userid)
@@ -26,6 +27,7 @@ class GCPlayer:
             self.purity = SavedData["purity"]
             self.lofi = SavedData["lofi"]
             self.money = SavedData["money"]
+            self.hunger = SavedData["hunger"]
             self.new = False
         # Or initialize from given values
         else:
@@ -34,6 +36,7 @@ class GCPlayer:
             self.purity = purity
             self.lofi = lofi
             self.money = money
+            self.hunger = hunger
             self.persist()
             self.new = True
 
@@ -44,7 +47,8 @@ class GCPlayer:
             'location': self.location,
             'purity': self.purity,
             'lofi': self.lofi,
-            'money': self.money
+            'money': self.money,
+            'hunger': self.hunger
         },
         User.id == self.userid
         )
