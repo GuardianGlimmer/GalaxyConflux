@@ -1,6 +1,8 @@
 import discord
 import gccfg
 import gcloader
+from gcutility import sent_message
+
 
 client = gccfg.client
 
@@ -10,6 +12,7 @@ async def on_ready():
 
     #load config jsons and get discord channels and roles
     gcloader.generate_cmd_map()
+    gcloader.generate_spell_map()
     await gcloader.generate_channel_map()
     await gcloader.generate_role_map()
 
@@ -32,7 +35,8 @@ async def on_message(message):
         if cmd_fn != None:
             await cmd_fn(message)
         else:
-            #TODO: add response for players typing unknown commands
+            response = "I'm not sure I understood that... So sorry!"
+            await message.channel.send(response)
             pass
 
 # read token file
@@ -41,6 +45,6 @@ async def on_message(message):
 
 # connect to discord
 try:
-	client.run("NzYwOTAzODIwODU0NDI3NjUw.X3S05w.f3s4sB8isYJqXYH-xpa8e_O8-94")
+	client.run("")
 except:
-    print("NzYwOTAzODIwODU0NDI3NjUw.X3S05w.f3s4sB8isYJqXYH-xpa8e_O8-94")
+    print("")
