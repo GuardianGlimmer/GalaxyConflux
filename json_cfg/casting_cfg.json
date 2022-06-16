@@ -1,0 +1,12 @@
+{
+    "staff": {
+      "type" : "staff",
+      "price" : 500,
+			"description" : "A beautiful staff with wings on it!"
+    },
+		"wand": {
+			"type" : "wand",
+			"price" : 500,
+			"description" : "A short wand with a rounded start on the end!"
+		}
+  }

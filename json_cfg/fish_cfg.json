@@ -1,0 +1,32 @@
+{
+    "Glittering Fish": {
+      "rarity" : "common",
+      "price" : 30,
+			"description" : "Glittering fish are the most common fish in the city. No one is really sure if the glittering bay is named after these fish, or if they are named after the bay. Either way, the water sure is glittering"
+    },
+		"Sweet Shrimp": {
+			"rarity" : "common",
+			"price" : 40,
+			"description" : "Sweet shrimp are about 4 inches in length, and are very sweet!"
+		},
+		"Northeastern Stingray" : {
+			"rarity" : "rare",
+			"price" : 150,
+			"descrition" : "The northeastern stingray is a rare species that inhabits the waters around the city. They are a bright pink color, and are solitary hunters."
+		},
+		"Bubble Fish" : {
+			"rarity" : "uncommon",
+			"price" : 70,
+			"description" : "This round fish propels itself through the water backwards, blowing bubbles out of itself, which it inflates using its massive gills. Scientists still are not sure how this creature evolved."
+		},
+		"Shy Frog" : {
+			"rarity" : "legendary",
+			"price" : 1000,
+			"description" : "These small amphibians are found all around the city, however they are vey shy and avoid humans when possible. They sing a soft quiet song to attract other shy frogs. They are a pale pink in color during the day, and turn a deep blue at night." 
+		},
+		"Strawberry Squid" : {
+			"rarity" : "legendary",
+			"price" : 1000,
+			"description" : "This red squid is found in the deep waters of the bay. As light shines from the gemstone like spots, it looks like someone went insane with a bejewler."
+		}
+  }

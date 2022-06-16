@@ -1,0 +1,106 @@
+{
+    "frilly skirt": {
+      		"type" : "bottom",
+     	 	"price" : 20,
+			"description" : "A cute skirt with frills on it!",
+			"style" : "cute",
+			"fashion" : 10,
+			"adorntxt" : "You slip on the frilly skirt. You look totally adorable in this! You twirl in place watching the frills go crazy."
+    },
+		"tuxedo": {
+			"type" : "top",
+			"price" : 50,
+			"description" : "A formal black and white suit.",
+			"style" : "fancy",
+			"fashion" : 10,
+			"adorntxt" : "You pull on your professional suit. You look very spiffy!"
+    },
+		"small top hat": {
+			"type": "hat",
+			"price": 50,
+			"description" : "A tiny top hat that rests askew on your head.",
+			"style" : "fancy",
+			"fashion" : 5,
+			"adorntxt" : "You plop the top hat on your head. It slides to an angle."
+		},
+		"giant red bow" : {
+			"type" : "hat",
+			"price" : 30,
+			"description" : "A huge red bow worn on the back or side of the head. Its tails trail and flow in the wind",
+			"style" : "cute",
+			"fashion" : 5,
+			"adorntxt" : "you tie the bow into your hair."
+		},
+		"rain boots" : {
+			"type" : "shoes",
+			"price" : 20,
+			"description": "Large partially see through rain boots that almost come up to your knees. Protects you from splashing in big puddles.",
+			"style" : "cute",
+			"fashion" : 1,
+			"adorntxt" : "You pull on your big rubber rain boots! They are cozy and will keep your feet warm."
+		},
+		"baggy hoodie" : {
+			"type" : "hoodie",
+			"price": 70,
+			"description": "A big soft hoodie with a large front pocket. On the front is a character from your favorite show!",
+			"style": "cool",
+			"fashion": 1,
+			"adorntxt": "You pull the massive hoodie over your head, snug inside of it, you are ready to face the world!"
+		},
+		"rose poncho" : {
+			"type" : "hoodie",
+			"price" : 500,
+			"description" : "The ponchoiest poncho EVER. It is pink and in the shape of a huge rose! It smells like roses too. This will keep you safe from the wind.",
+			"style": "cool",
+			"fashion": 10,
+			"adorntxt" : "You pull on the poncho, the smell of roses filling your nostrils as you do."
+		},
+		"swimsuit" : {
+			"type" : "full",
+			"price" : 100,
+			"description" : "A cute little swimsuit for splashing in the water!",
+			"style" : "cute",
+			"fashion" : 10,
+			"adorntxt" : "You dip into a changing room and emerge wearing your cute swimsuit!"
+		},
+		"jeans" : {
+			"type" : "bottom",
+			"price" : 50,
+			"description" : "A pair of jeans with a flower pattern on the back!",
+			"style" : "cool",
+			"fashion" : 4,
+			"adorntxt" : "You pull on your jeans, one leg at a time."
+		},
+		"long skirt": {
+      "type" : "bottom",
+     	"price" : 40,
+			"description" : "A long skirt, with a beautiful pattern.",
+			"style" : "fancy",
+			"fashion" : 6,
+			"adorntxt" : "You slip on the long skirt. You feel sophisticated and beautiful."
+    },
+		"short shorts" : {
+			"type" : "bottom",
+			"price" : 50,
+			"description" : "A pair of short shorts. Some people think these are innapropriate, YOU think they're cozy AF.",
+			"style": "cool",
+			"fashion" : 3,
+			"adorntxt" : "You pull with all your might to get your short shorts on."
+		},
+		"sundress" : {
+			"type" : "dress",
+			"price" : 200,
+			"description" : "A beautiful sundress with flowers on it!",
+			"style" : "cute",
+			"fashion" : 10,
+			"adorntxt" : "You pull on the sundress."
+		},
+		"striped shirt" : {
+			"type" : "top",
+			"price" : 50,
+			"description" : "A striped loose fitting top for hot days!",
+			"style" : "cool",
+			"fashion" : 4,
+			"adorntxt" : "You pull on the striped shirt."
+		}
+  }

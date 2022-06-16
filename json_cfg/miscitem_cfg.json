@@ -1,0 +1,12 @@
+{
+    "manga": {
+      "type" : "book",
+      "price" : 20,
+			"description" : "The cover of this manga shows a pretty girl being rescued from the clutches of an evil monster by a beautiful heroine with long pink hair."
+    },
+		"crystal shard": {
+			"type" : "relic",
+			"price" : 60,
+			"description" : "A beautiful shard of a light blue crystal. It is cold to the touch."
+		}
+  }

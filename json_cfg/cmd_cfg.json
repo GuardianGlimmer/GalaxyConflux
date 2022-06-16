@@ -64,7 +64,7 @@
         "function" : "lookout_cmd"
     },
     "fight_cmd": {
-        "command_names": ["fight"],
+        "command_names": ["fight", "joinfight", "join"],
         "function" : "fight"
     },
     "spell_list_cmd": {
@@ -80,7 +80,59 @@
         "function" : "learn_spell"
     },
     "queue_spell_cmd": {
-        "command_names": ["qspell", "queue"],
+        "command_names": ["qspell", "queue", "castspell", "attack", "spell"],
         "function" : "queue_spell"
-    }
+    },
+    "inventory": {
+        "command_names": ["inv", "inventory"],
+        "function" : "inventory"
+    },
+		"lvl_cmd": {
+			"command_names": ["lvl", "level"],
+			"function" : "lvl_cmd"
+		},
+		"hp_cmd": {
+			"command_names": ["hp", "health"],
+			"function" : "hp_cmd"
+		},
+		"xp_cmd": {
+			"command_names": ["xp", "exp"],
+			"function" : "xp_cmd"
+		},
+		"purity_cmd": {
+			"command_names": ["purity"],
+			"function" : "purity_cmd"
+		},
+		"data_cmd": {
+			"command_names": ["data"],
+			"function" : "data"
+		},
+		"test_cmd": {
+			"command_names": ["test"],
+			"function": "test"
+		},
+		"barter_cmd" : {
+			"command_names": ["sellfish", "sell", "barter"],
+			"function": "barter_cmd"
+		},
+		"inspect_cmd" : {
+			"command_names": ["inspect"],
+			"function": "inspect_cmd"
+		},
+    "adorn_cmd" : {
+      "command_names": ["adorn", "wear", "puton"],
+      "function": "adorn_cmd"
+    },
+		"fashion_cmd" :  {
+			"command_names": ["fashion", "drip"],
+			"function": "fashion_cmd"
+		},
+		"dedorn_cmd" : {
+			"command_names": ["dedorn", "unadorn"],
+			"function": "dedorn_cmd"
+		},
+		"command_map_cmd" : {
+			"command_names": ["cmds", "commands"],
+			"function": "cmds_cmd"
+		}
 }
