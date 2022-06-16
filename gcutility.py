@@ -1,5 +1,6 @@
 import gccfg
 from gcclasses import GCPlayer
+import discord
 
 """Message fucntion that automates some of the formating"""
 async def sent_message(msg, text, player_formatting = True):
@@ -8,6 +9,9 @@ async def sent_message(msg, text, player_formatting = True):
 
 	await msg.channel.send(text)
 
+async def botmessage(msg, thistext, player_formatting = True):
+	if player_formatting:
+		await msg.channel.send(thistext)
 
 """Update discord member roles to player location""" #TODO: update to pick and choose which roles to add and remove instead of remove all roles then add all correct roles
 async def update_member_role(member):

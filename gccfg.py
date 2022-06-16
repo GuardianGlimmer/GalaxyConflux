@@ -11,12 +11,14 @@ cmd_map = {}
 location_map = {}
 role_map = {}
 spell_map = {}
-
+fish_map = {}
+misc_map = {}
+cosmetic_map = {}
 # options to make bot automatically setup channels and roles
 # needs more testing and polishing and should not be use on main server yet
 # very convienent for test server where channel and roles can be created and deleted without consequence
-construct_mising_channels = False
-construct_mising_roles = False 
+construct_mising_channels = True
+construct_mising_roles = True
 
 fights = {}
 
@@ -24,7 +26,7 @@ damage_source_combat = "combat"
 
 death_cost = 20
 
-pts_per_round = 30
+pts_per_round = 10
 
 spell_user_player = "players"
 spell_user_enemy = "enemies"

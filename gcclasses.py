@@ -7,6 +7,7 @@ from tinydb import Query
 
 
 GCplayers = gcdb.GCplayers
+GCitems = gcdb.GCitems
 
 class GCPlayer:
 	# setup default values
@@ -18,6 +19,9 @@ class GCPlayer:
 		lofi = 0,
 		money = 0,
 		hunger = 0,
+		health = 100,
+		level = 1,
+		xp = 0,
 		known_spells = []
 	):
 		# Check for and possibly load saved data
@@ -29,6 +33,9 @@ class GCPlayer:
 			self.lofi = SavedData["lofi"]
 			self.money = SavedData["money"]
 			self.hunger = SavedData["hunger"]
+			self.health = SavedData["health"]
+			self.level = SavedData["level"]
+			self.xp = SavedData["xp"]
 			self.known_spells = SavedData["known_spells"]
 			self.new = False
 		# Or initialize from given values
@@ -39,6 +46,9 @@ class GCPlayer:
 			self.lofi = lofi
 			self.money = money
 			self.hunger = hunger
+			self.health = health
+			self.level = level
+			self.xp = xp
 			self.known_spells = known_spells
 			self.persist()
 			self.new = True
@@ -52,6 +62,9 @@ class GCPlayer:
 			'lofi': self.lofi,
 			'money': self.money,
 			'hunger': self.hunger,
+			'health': self.health,
+			'level': self.level,
+			'xp': self.xp,
 			'known_spells': self.known_spells
 		},
 		User.id == self.userid
@@ -70,8 +83,12 @@ class GCPlayer:
 
 		""" Handle loss of health """
 	def change_hp(self, amount, source):
-		self.lofi += amount
-		if self.lofi <= 0:
+		maxhp = int(100 + (self.level * 10))
+		self.purity = "pure"
+		self.health += amount
+		if self.health > maxhp:
+			self.health = maxhp
+		if self.health <= 0:
 			self.die(source)
 		self.persist()
 
@@ -84,10 +101,35 @@ class GCPlayer:
 			gccfg.fights[self.location].player_ids.remove(self.userid)
 			# TODO: potential monster buffs for kills
 		self.money -= gccfg.death_cost
-		self.lofi = 0
+		self.health = int(100 + (self.level * 10))
 		# Lower purity tier or something?
-		self.location  = "downtown"
+		self.purity = "corrupted"
+		self.location  = "study-hall"
 		self.persist()
+
+	def lvlup(self):
+		if self.xp >= 1000 * self.level:
+			self.level += 1
+			self.xp = 0
+			self.persist()
+
+	def change_xp(self, amount):
+		self.xp += amount
+		print("added xp")
+		self.lvlup()
+		self.persist()
+
+	def add_value(self, value, amount):
+		self.value += amount
+		print("added %s to %s" % (amount, value))
+		self.lvlup()
+		self.persist()
+		
+	def change_money(self, amount):
+		self.money += amount
+		print("added money")
+		self.persist()
+
 
 		
 		
@@ -151,6 +193,7 @@ class GCEnemy:
 
 	def die(self):
 		gcdb.deleteEnemy(self.id)
+		gccfg.fights[self.location].deceased_enemies = (self.size)
 		gccfg.fights[self.location].enemy_ids.remove(self.id)
 		# TODO: distribute rewards to players left in fight?
 
@@ -247,3 +290,222 @@ class GCSpell:
 			cost = self.cost,
 			users = self.users
 		))
+
+class GCItem:
+	# Set default values
+	def __init__(
+			self,
+			name = "",
+			id = 0,
+			ownerid = 0,
+			itemtype = '',
+			adorner = 0,
+			equipper = 0,
+			level = 1,
+			xp = 0,
+			known_spells = []
+		
+
+	):
+		SavedData = gcdb.getItemData(id)
+		if SavedData:
+			self.id = id
+			self.name = SavedData['name']
+			self.ownerid = SavedData['ownerid']
+			self.itemtype = SavedData['itemtype']
+			self.adorner = SavedData['adorner']
+			self.equipper = SavedData['equipper']
+			self.level = SavedData["level"]
+			self.xp = SavedData["xp"]
+			self.known_spells = SavedData["known_spells"]
+			
+		else:
+			self.id = id
+			self.name = name
+			self.ownerid = ownerid
+			self.itemtype = itemtype
+			self.adorner = adorner
+			self.equipper = equipper
+			self.level = level
+			self.xp = xp
+			self.known_spells = known_spells
+			gcdb.createItem(self)
+	def persist(self):
+		# Grab existing data
+		SavedData = gcdb.getItemData(self.id)
+
+		# Iterate through all saved values
+		for key in SavedData:
+			if key != 'id' and SavedData[key] != getattr(self, key):
+				# Only Bother with changed values
+				gcdb.setItemAttribute(self.id, key, getattr(self, key))
+
+class GCSportsTeam:
+	# Set default values
+	def __init__(
+			self,
+			id = 0,
+			name = "",
+			emoji = "",
+			wins = 0,
+			losses = 0,
+			pizzaz = 0
+	):
+		SavedData = gcdb.getTeamData(id)
+		if SavedData:
+			self.id = id
+			self.name = SavedData["name"]
+			self.emoji = SavedData["emoji"]
+			self.wins = SavedData["wins"]
+			self.losses = SavedData["losses"]
+			self.pizzaz = SavedData["pizzaz"]
+		else:
+			self.id = id
+			self.name = name
+			self.emoji = emoji
+			self.wins = wins
+			self.losses = losses
+			self.pizzaz = pizzaz
+			gcdb.createTeamEntry(self)
+
+	""" Save new data to the database """
+	def persist(self):
+		# Grab existing data
+		SavedData = gcdb.getTeamData(self.id)
+
+		# Iterate through all saved values
+		for key in SavedData:
+			if key != 'id' and SavedData[key] != getattr(self, key):
+				# Only Bother with changed values
+				gcdb.setTeamAttribute(self.id, key, getattr(self, key))
+
+class GCSportsPlayer:
+	# Set default values
+	def __init__(
+			self,
+			id = 0,
+			teamid = 0,
+			name = "",
+			wins = 0,
+			losses = 0,
+			power = 0,
+			determination = 0,
+			spirit = 0,
+			chill = 0,
+			goonery = 0,
+			cringe = 0
+	):
+		SavedData = gcdb.getSPlayerData(id)
+		if SavedData:
+			self.id = id
+			self.teamid = SavedData["teamid"]
+			self.name = SavedData["name"]
+			self.wins = SavedData["wins"]
+			self.losses = SavedData["losses"]
+			self.power = SavedData["power"]
+			self.determination = SavedData['determination']
+			self.spirit = SavedData['spirit']
+			self.chill = SavedData['chill']
+			self.goonery = SavedData['goonery']
+			self.cringe = SavedData['cringe']
+		else:
+			self.id = id
+			self.teamid = teamid
+			self.name = name
+			self.wins = wins
+			self.losses = losses
+			self.power = power
+			self.determination = determination
+			self.spirit = spirit
+			self.chill = chill
+			self.goonery = goonery
+			self.cringe = cringe
+			gcdb.createSPlayerEntry(self)
+
+	""" Save new data to the database """
+	def persist(self):
+		# Grab existing data
+		SavedData = gcdb.getSPlayerData(self.id)
+
+		# Iterate through all saved values
+		for key in SavedData:
+			if key != 'id' and SavedData[key] != getattr(self, key):
+				# Only Bother with changed values
+				gcdb.setSPlayerAttribute(self.id, key, getattr(self, key))
+
+
+class GCFish:
+	# Create the spell object
+	def __init__(
+			self,
+			name = "",
+			json_entry = None,
+			rarity = "",
+			price = 0,
+			description = "",
+	):
+		if json_entry:
+			self.name = name
+			self.rarity = json_entry.get("rarity")
+			self.price = json_entry.get("price")
+			self.description = json_entry.get("description")
+		else:
+			self.name = name
+			self.rarity = rarity
+			self.price = price
+			self.description = description
+
+class GCMisc:
+	# Create the spell object
+	def __init__(
+			self,
+			name = "",
+			json_entry = None,
+			type = "",
+			price = 0,
+			description = "",
+	):
+		if json_entry:
+			self.name = name
+			self.type = json_entry.get("type")
+			self.price = json_entry.get("price")
+			self.description = json_entry.get("description")
+		else:
+			self.name = name
+			self.type = type
+			self.price = price
+			self.description = description
+			
+class GCCosmetic:
+	def __init__(
+		self,
+		name = "",
+		json_entry = None,
+		type = "",
+		price = 0,
+		description = "",
+		style = "",
+		fashion = "",
+		adorntxt = "",
+	):
+		if json_entry:
+			self.name = name
+			self.type = json_entry.get("type")
+			self.price = json_entry.get("price")
+			self.description = json_entry.get("description")
+			self.price = json_entry.get("price")
+			self.description = json_entry.get("description")
+			self.style = json_entry.get("style")
+			self.fashoin = json_entry.get("fashion")
+			self.adorntxt = json_entry.get("adorntxt")
+		else:
+			self.name = name
+			self.type = type
+			self.price = price
+			self.type = type
+			self.price = price
+			self.description = description
+			self.style = style
+			self.fashion = fashion
+			self.adorntxt = adorntxt
+	

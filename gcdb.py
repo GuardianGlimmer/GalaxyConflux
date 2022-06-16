@@ -4,6 +4,10 @@ from tinydb.operations import increment, subtract, add, set
 
 GCplayers = TinyDB("./database/GCplayers.json")
 GCenemies = TinyDB("./database/GCenemies.json")
+GCitems = TinyDB("./database/GCitems.json")
+GCteams = TinyDB("./database/GCteams.json")
+GCsplayers = TinyDB("./database/GCsportsplayers.json")
+
 
 '''
 	Retrieves a single passed attribute for a particular player
@@ -128,3 +132,146 @@ def deleteEnemy(id):
 		print("Failed to remove enemy with id {}".format(str(id)))
 	elif len(deleted_ids) > 1:
 		print("Removed {} enemies with id {}".format(str(len(deleted_ids)), str(id)))
+
+'''
+	ITEM DATABASE COMMANDS START HERE
+'''
+
+def getItemData(id):
+	data = GCitems.search(where('id') == id)
+	#print(len(data))
+	if len(data) >= 1:
+		return (data[0])
+	else:
+		return False
+
+def createItem(gcitem):
+	GCitems.insert({'id': gcitem.id,
+					'name': gcitem.name,
+					'ownerid': gcitem.ownerid,
+					'itemtype': gcitem.itemtype,
+					'adorner': gcitem.adorner,
+					'equipper': gcitem.equipper,
+					'level': gcitem.level,
+					'xp': gcitem.xp,
+					'known_spells': gcitem.known_spells,
+					
+	})
+	
+def finditems(key, value):
+	data = GCitems.search(where(key) == value)
+	if len(data) >= 1:
+		return (data)
+	else:
+		return False
+
+def getItemAttribute(id, attr):
+	data = GCitems.search(where('id') == id)
+	if len(data) == 1:
+		return (data[0][attr])
+	else:
+		print("Failed to retrieve {} for item {}".format(attr, str(id)))
+		return False
+
+def setItemAttribute(id, attr, value):
+	try:
+		GCitems.update(set(attr, value), where('id') == id)
+		return True
+	except:
+		print("Failed to set {} to {} for item {}".format(attr, str(value), str(id)))
+		return False
+
+
+'''
+	TEAM DATABASE COMMANDS START HERE
+'''
+
+def getTeamData(id):
+	data = GCteams.search(where('id') == id)
+	#print(len(data))
+	if len(data) >= 1:
+		return (data[0])
+	else:
+		return False
+
+def createTeamEntry(gcteam):
+	GCteams.insert({'id': gcteam.id,
+					'name': gcteam.name,
+					'emoji': gcteam.emoji,
+					'wins': gcteam.wins,
+					'losses': gcteam.losses,
+					'pizzaz': gcteam.pizzaz
+	})
+
+def findteam(key, value):
+	data = GCteams.search(where(key) == value)
+	if len(data) >= 1:
+		return(data)
+	else:
+		return False
+		
+def getTeamAttribute(id, attr):
+	data = GCteams.search(where('id') == id)
+	if len(data) == 1:
+		return (data[0][attr])
+	else:
+		print("Failed to retrieve {} for item {}".format(attr, str(id)))
+		return False
+
+def setTeamAttribute(id, attr, value):
+	try:
+		GCteams.update(set(attr, value), where('id') == id)
+		return True
+	except:
+		print("Failed to set {} to {} for item {}".format(attr, str(value), str(id)))
+		return False
+
+
+'''
+	DATABASE FOR SPORTS PLAYERS
+'''
+
+def getSPlayerData(id):
+	data = GCsplayers.search(where('id') == id)
+	#print(len(data))
+	if len(data) >= 1:
+		return (data[0])
+	else:
+		return False
+
+def createSPlayerEntry(gcsplayer):
+	GCsplayers.insert({'id': gcsplayer.id,
+					'teamid': gcsplayer.teamid,
+					'name': gcsplayer.name,
+					'wins': gcsplayer.wins,
+					'losses': gcsplayer.losses,
+					'power': gcsplayer.power,
+					'determination': gcsplayer.determination,
+					'spirit': gcsplayer.spirit,
+					'chill': gcsplayer.chill,
+					'goonery': gcsplayer.goonery,
+					'cringe': gcsplayer.cringe
+	})
+
+def findSPlayer(key, value):
+	data = GCsplayers.search(where(key) == value)
+	if len(data) >= 1:
+		return(data)
+	else:
+		return False
+		
+def getSPlayerAttribute(id, attr):
+	data = GCsplayers.search(where('id') == id)
+	if len(data) == 1:
+		return (data[0][attr])
+	else:
+		print("Failed to retrieve {} for item {}".format(attr, str(id)))
+		return False
+
+def setSPlayerAttribute(id, attr, value):
+	try:
+		GCsplayers.update(set(attr, value), where('id') == id)
+		return True
+	except:
+		print("Failed to set {} to {} for item {}".format(attr, str(value), str(id)))
+		return False

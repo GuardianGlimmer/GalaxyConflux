@@ -6,6 +6,9 @@ from pprint import pprint
 
 from gcclasses import GCLocation
 from gcclasses import GCSpell
+from gcclasses import GCFish
+from gcclasses import GCMisc
+from gcclasses import GCCosmetic
 import gccfg
 
 
@@ -63,6 +66,8 @@ async def generate_channel_map():
 	#pprint(gccfg.location_map)
 
 
+		
+
 
 async def generate_role_map():
 	guild = gccfg.client.guilds[0]
@@ -113,3 +118,40 @@ def generate_spell_map():
 		gccfg.spells.append(spell_obj)
 		for alias in spell_obj.aliases:
 			gccfg.spell_map.update({alias: spell_obj})
+
+
+def generate_fish_map():
+	gccfg.fish_map = {}
+
+	f = open(os.path.join('json_cfg', 'fish_cfg.json'), encoding ='utf8')
+	fish_json = json.load(f)
+	f.close()
+
+	for fish_id in fish_json:
+		fish_obj = GCFish(fish_id, json_entry=fish_json[fish_id])
+		gccfg.fish_map.update({fish_id: fish_obj})
+
+
+def generate_misc_map():
+	gccfg.misc_map = {}
+
+	f = open(os.path.join('json_cfg', 'miscitem_cfg.json'), encoding ='utf8')
+	misc_json = json.load(f)
+	f.close()
+
+	for misc_id in misc_json:
+		misc_obj = GCMisc(misc_id, json_entry=misc_json[misc_id])
+		gccfg.misc_map.update({misc_id: misc_obj})
+
+
+def generate_cosmetic_map():
+	gccfg.cosmetic_map = {}
+
+	f = open(os.path.join('json_cfg', 'cosmetics_cfg.json'), encoding ='utf8')
+	cosmetic_json = json.load(f)
+	f.close()
+
+	for cosmetic_id in cosmetic_json:
+		cosmetic_obj = GCCosmetic(cosmetic_id, json_entry=cosmetic_json[cosmetic_id])
+		gccfg.cosmetic_map.update({cosmetic_id: cosmetic_obj})
+		

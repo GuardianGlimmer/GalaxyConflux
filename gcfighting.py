@@ -5,8 +5,17 @@ from gcclasses import GCPlayer
 from gcclasses import GCEnemy
 import gcdb
 import gcutility
+from gcutility import sent_message, botmessage
 
 class fight_data:
+    def stop(self):
+              self.location = "downtown",
+              self.player_queue = [],
+              self.enemy_queue = [],
+              self.enemy_ids = [],
+              self.player_ids = [],
+              self.pts_remaining = {},
+              self.deceased_enemies = []
     def __init__(
             self,
             location = "downtown",
@@ -14,7 +23,11 @@ class fight_data:
             enemy_queue = [],
             enemy_ids = [],
             player_ids = [],
-            pts_remaining = {}
+            pts_remaining = {},
+						deceased_enemies = []
+			
+	          
+			
     ):
         self.location = location
         self.player_queue = player_queue
@@ -22,7 +35,11 @@ class fight_data:
         self.enemy_ids = enemy_ids
         self.player_ids = player_ids
         self.pts_remaining = pts_remaining
+        self.deceased_enemies = deceased_enemies
         gccfg.fights[location] = self
+    
+			
+				
 
 async def initiate_combat(enemy, player, msg):
     # Check if there is already a fight happening in that district
@@ -39,7 +56,7 @@ async def initiate_combat(enemy, player, msg):
             response += "\n but {} has now joined the battle!".format(enemy.name)
             existing.enemy_ids.append(enemy.id)
         # Send the response and cut the function, dont need to start a second loop
-        await msg.channel.send('*' + str(msg.author.display_name) + ':* ' + response)
+        await sent_message(msg, response)
         return
 
     # Initialize the fight
@@ -47,7 +64,7 @@ async def initiate_combat(enemy, player, msg):
         location = enemy.location,
         enemy_ids = [enemy.id],
         player_ids = [player.userid],
-        pts_remaining = {player.userid : gccfg.pts_per_round}
+        pts_remaining = {player.userid : (gccfg.pts_per_round) * player.level}
     )
 
     # Tell the user the fight started
@@ -88,7 +105,7 @@ async def initiate_combat(enemy, player, msg):
         # Distribute AOE healing
         heal_per_player = int(healing_pool / len(fight.player_ids))
         if heal_per_player > 0:
-            passives_response += "Everyone is healed for {} lofi!\n".format(heal_per_player)
+            passives_response += "Everyone is healed for {} health!\n".format(heal_per_player)
             for healed_id in fight.player_ids:
                 # Grab player object from id and heal
                 healed = GCPlayer(userid = healed_id)
@@ -101,7 +118,7 @@ async def initiate_combat(enemy, player, msg):
             passives_response += "Attacks are buffed by {}%!\n".format(attack_pool * 10)
 
         if passives_response != "":
-            await msg.channel.send(passives_response)
+            await botmessage(msg, passives_response)
 
         # Calculate secondary spells
         total_damage = 0
@@ -136,16 +153,27 @@ async def initiate_combat(enemy, player, msg):
 
         # potentially end the fight if no enemies are left
         if len(fight.enemy_ids) == 0:
+            xpgain = 0
             player_damage_msg += "\n\nThe last enemy in the fight has been slain! "
+            for playerid in fight.player_ids:
+              player = GCPlayer(userid = playerid)
+              print(player)
+              targets = gcutility.copy_list(fight.deceased_enemies)
+              print(targets)
+              xpgain += targets[-1] * 100
+              print("xp calculate it is " + str(xpgain))
+              player.change_xp(xpgain)
+              player.change_money(int(xpgain / 2))
             if gcdb.findEnemies('location', fight.location):
                 player_damage_msg += "{} is still not safe however...".format(fight.location)
             else:
                 player_damage_msg += "{} is safe from the corruption!! For now...".format(fight.location)
             gccfg.fights.pop(fight.location)
-            await msg.channel.send(player_damage_msg)
+            await botmessage(msg, player_damage_msg)
+            await sent_message(msg, "You got " + str(xpgain) + " experience!")
             return
 
-        await msg.channel.send(player_damage_msg)
+        await botmessage(msg, player_damage_msg)
 
 
         # Decide enemy attacks after players attack to ensure
@@ -178,21 +206,21 @@ async def initiate_combat(enemy, player, msg):
         for fighter_id in damaged_players:
             fighter = GCPlayer(userid = fighter_id)
             fighter.change_hp(-1*monster_damage_per_player, gccfg.damage_source_combat)
-            if fighter.lofi <= 0:
+            if fighter.health <= 0:
                 monster_damage_message += "\n<@{}> Has been critically wounded and removed from the fight!".format(fighter.userid)
 
         # potentially end the fight if no players are left
         if len(fight.player_ids) == 0:
             monster_damage_message += "\n\nThe last player has been slain! {} remains in darkness...".format(fight.location)
             gccfg.fights.pop(fight.location)
-            await msg.channel.send(monster_damage_message)
+            await botmessage(msg, monster_damage_message)
             return
-        await msg.channel.send(monster_damage_message)
+        await botmessage(msg, monster_damage_message)
 
         # Clear spell queues and inform players of new round
         fight.enemy_queue = []
         fight.player_queue = []
         for uid in fight.pts_remaining:
-            fight.pts_remaining[uid] = gccfg.pts_per_round
+            fight.pts_remaining = {player.userid : (gccfg.pts_per_round) * player.level}
         new_round_msg = "The players once again have 30s to prepare their spells..."
-        await msg.channel.send(new_round_msg)
+        await botmessage(msg, new_round_msg)
