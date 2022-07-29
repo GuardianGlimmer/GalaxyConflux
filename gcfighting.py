@@ -75,7 +75,11 @@ async def initiate_combat(enemy, player, msg):
 
         # Separate player attacks by priority
         passives = []
+        print(passives)
+        print("initialize passive")
         actives = []
+        print(actives)
+        print("initialize active")
         for spell in fight.player_queue:
             if spell.type in gccfg.passive_types:
                 passives.append(spell)
@@ -164,6 +168,15 @@ async def initiate_combat(enemy, player, msg):
               print("xp calculate it is " + str(xpgain))
               player.change_xp(xpgain)
               player.change_money(int(xpgain / 2))
+            total_damage = 0
+            total_defense = 0
+            actives.clear()
+            passives.clear()
+            print(actives)
+            print(passives)
+            print(fight.player_queue)
+            fight.player_queue.clear()
+            print(fight.player_queue)
             if gcdb.findEnemies('location', fight.location):
                 player_damage_msg += "{} is still not safe however...".format(fight.location)
             else:
@@ -192,7 +205,7 @@ async def initiate_combat(enemy, player, msg):
         # calculate total damage from enemies
         monster_damage = 0
         for spell in fight.enemy_queue:
-            monster_damage += spell.power * avg_size
+            monster_damage += spell.power * avg_size * random.randrange(1, 4)
 
         # Subtract player defense, minimum zero damage
         monster_damage -= total_defense

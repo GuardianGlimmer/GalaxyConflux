@@ -50,4 +50,4 @@ async def on_message(message):
 
 # connect to discord
 
-client.run('TOKENHERE')
+client.run('OTA2NzMyMzg3MDEzMDk5NTUy.GUe0Yb.v_6CjqyI4A9U_n5J-tTXYx2-yEZr5cECzjMZyY')

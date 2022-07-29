@@ -668,7 +668,7 @@ async def adorn_cmd(msg):
 		wornitems = int(len(items))
 	else:
 		wornitems = 0
-	if wornitems >= player.level:
+	if wornitems >= (player.level * 3):
 		response = "You are already wearing the max items for your level (%s)." % (player.level)
 		#endhere
 	else:

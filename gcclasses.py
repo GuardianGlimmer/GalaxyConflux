@@ -108,7 +108,7 @@ class GCPlayer:
 		self.persist()
 
 	def lvlup(self):
-		if self.xp >= 1000 * self.level:
+		if self.xp >= 500 * ((self.level ^ 2) * .5):
 			self.level += 1
 			self.xp = 0
 			self.persist()
@@ -174,7 +174,7 @@ class GCEnemy:
 
 	""" Return starting HP based on enemy size """
 	def SizeToHP(self, size):
-		return (size * 10)
+		return (size * 20)
 
 	""" Grab 3 damage attacks at random """
 	def getAttacks(self, size):
@@ -193,7 +193,7 @@ class GCEnemy:
 
 	def die(self):
 		gcdb.deleteEnemy(self.id)
-		gccfg.fights[self.location].deceased_enemies = (self.size)
+		gccfg.fights[self.location].deceased_enemies.append(self.size)
 		gccfg.fights[self.location].enemy_ids.remove(self.id)
 		# TODO: distribute rewards to players left in fight?
 
