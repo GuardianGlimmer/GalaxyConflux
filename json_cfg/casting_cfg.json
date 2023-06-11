@@ -2,11 +2,29 @@
     "staff": {
       "type" : "staff",
       "price" : 500,
-			"description" : "A beautiful staff with wings on it!"
+			"description" : "An ornate staff, taller than you. It is slower than a wand, but causes devestatingly powerful magic.",
+			"spell_points" : 15,
+			"spell_power" : 30,
+			"spell_capacity" : 5,
+			"level_cost" : 10
     },
 		"wand": {
 			"type" : "wand",
-			"price" : 500,
-			"description" : "A short wand with a rounded start on the end!"
-		}
-  }
+			"price" : 200,
+			"description" : "A carved wooden wand, good for casting lots of similar spells quickly.",
+			"spell_points" : 35,
+			"spell_power" : 10,
+			"spell_capacity" : 3,
+			"level_cost" :  5
+			
+		},
+		"tome": {
+			"type" : "tome",
+			"price" : 350,
+			"description" : "A large tome for spells. The pages smell like ink, magic, and mountain flowers. Tomes can hold lots of spells, and are balanced overall for casting capacity, and and power.",
+			"spell_points" : 20,
+			"spell_power" : 10,
+			"spell_capacity" : 7,
+			"level_cost" : 6
+  	}
+}

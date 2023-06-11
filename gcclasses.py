@@ -303,7 +303,9 @@ class GCItem:
 			equipper = 0,
 			level = 1,
 			xp = 0,
-			known_spells = []
+			known_spells = [],
+			casting_points = 0,
+			spell_power = 0
 		
 
 	):
@@ -331,14 +333,21 @@ class GCItem:
 			self.known_spells = known_spells
 			gcdb.createItem(self)
 	def persist(self):
-		# Grab existing data
-		SavedData = gcdb.getItemData(self.id)
-
-		# Iterate through all saved values
-		for key in SavedData:
-			if key != 'id' and SavedData[key] != getattr(self, key):
-				# Only Bother with changed values
-				gcdb.setItemAttribute(self.id, key, getattr(self, key))
+		Item = Query()
+		GCitems.upsert({
+			'id' : self.id,
+			'name' : self.name,
+			"ownerid " : self.ownerid,
+			'itemtype' : self.itemtype,
+			'adorner' : self.adorner,
+			'equipper' : self.equipper,
+			'level' : self.level,
+			'xp' : self.xp,
+			'known_spells' : self.known_spells
+		},
+		Item.id == self.id
+		)
+		print("UPSERT")
 
 class GCSportsTeam:
 	# Set default values
@@ -509,3 +518,57 @@ class GCCosmetic:
 			self.fashion = fashion
 			self.adorntxt = adorntxt
 	
+class GCFood:
+	def __init__(
+		self,
+		name = "",
+		json_entry = None,
+		location = "",
+		price = 0,
+		description = "",
+		hunger_restored = "",
+	):
+		if json_entry:
+			self.name = name
+			self.location = json_entry.get("location")
+			self.price = json_entry.get("price")
+			self.description = json_entry.get("description")
+			self.hunger_restored = json_entry.get("hunger_restored")
+		else:
+			self.name = name
+			self.location = location
+			self.price = price
+			self.description = description
+			self.hunger_restored = hunger_restored
+
+class GCCasting:
+	def __init__(
+		self,
+		name = "",
+		json_entry = None,
+		type = "",
+		price = 0,
+		description = "",
+		spell_points = 0,
+		spell_power = 0,
+		spell_capacity = 0,
+		level_cost = 0
+	):
+		if json_entry:
+			self.name = name
+			self.type = json_entry.get("type")
+			self.price = json_entry.get("price")
+			self.description = json_entry.get("description")
+			self.spell_points = json_entry.get("spell_points")
+			self.spell_power = json_entry.get("spell_power")
+			self.spell_capacity = json_entry.get("spell_capacity")
+			self.level_cost = json_entry.get("level_cost")
+		else:
+			self.name = name
+			self.type = type
+			self.price = price
+			self.description = description
+			self.spell_points = spell_points
+			self.spell_power = spell_power
+			self.spell_capacity = spell_capacity
+			self.level_cost = level_cost

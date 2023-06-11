@@ -17,6 +17,8 @@ async def on_ready():
     gcloader.generate_fish_map()
     gcloader.generate_misc_map()
     gcloader.generate_cosmetic_map()
+    gcloader.generate_food_map()
+    gcloader.generate_casting_map()
     await gcloader.generate_channel_map()
     await gcloader.generate_role_map()
 

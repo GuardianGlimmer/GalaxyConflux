@@ -14,6 +14,8 @@ spell_map = {}
 fish_map = {}
 misc_map = {}
 cosmetic_map = {}
+food_map = {}
+casting_map = {}
 # options to make bot automatically setup channels and roles
 # needs more testing and polishing and should not be use on main server yet
 # very convienent for test server where channel and roles can be created and deleted without consequence

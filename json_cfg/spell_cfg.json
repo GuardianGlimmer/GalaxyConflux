@@ -1,44 +1,44 @@
 {
-    "Throw Something!": {
-      "aliases" : ["magic missile", "basicattack", "mm", "ba", "friendship", "damage", "dmg", "throw something", "throw", "ts", "attack"],
-      "type" : "damage",
-      "power" : 5,
-      "cost" : 10,
-      "users" : ["players", "enemies"]
-    },
-    "Block Your Face!" : {
-      "aliases" : ["basicblock", "shield", "defense", "defend", "def", "magicshield", "block your face", "block", "byf"],
-      "type" : "defense",
-      "power" : 1,
-      "cost" : 5, 
-      "users" : ["players"]
-    },
-    "Heal a Friend!" : {
-      "aliases" : ["targetheal", "heal", "medicine", "heal a friend", "hf","haf"],
-      "type" : "heal_target",
-      "power" : 5,
-      "cost" : 10,
-      "users" : ["players"]
-    },
-    "Heal Everyone!" : {
-      "aliases" : ["blanketheal", "bigheal", "bh", "heal everyone", "he"],
-      "type" : "heal_aoe",
-      "power" : 3,
-      "cost" : 15,
-      "users" : ["players"]
-    },
-    "Power Up!" : {
-      "aliases" : ["atkbuff", "buff", "powerup", "fuel"],
-      "type" : "attack_buff",
-      "power" : 3,
-      "cost" : 5,
-      "users" : ["players"]
-    },
-    "Friendship Shield?" : {
-      "aliases" : ["defbuff", "bigshield", "big shield", "friendship shield", "defense sphere"],
-      "type" : "defense_buff",
-      "power" : 2,
-      "cost" : 10,
-      "users" : ["players"]
-    }
+  "thunderclap": {
+    "aliases" : ["thunderclap", "thunder", "lightning"],
+    "type" : "damage",
+    "power" : 5,
+    "cost" : 5,
+    "users" : ["players", "enemies"]
+  },
+  "shield of light" : {
+    "aliases" : ["shield", "block", "shielf of light", "light shield", "shield light", "sol"],
+    "type" : "defense",
+    "power" : 1,
+    "cost" : 7, 
+    "users" : ["players"]
+  },
+  "healing ivy" : {
+    "aliases" : ["heal", "ivy", "healing ivy", "heal ivy", "hi","ivy heal"],
+    "type" : "heal_target",
+    "power" : 7,
+    "cost" : 10,
+    "users" : ["players"]
+  },
+  "solar heal" : {
+    "aliases" : ["solar heal", "group heal", "sol heal", "healing light", "sh"],
+    "type" : "heal_aoe",
+    "power" : 3,
+    "cost" : 15,
+    "users" : ["players"]
+  },
+  "power chant" : {
+    "aliases" : ["power chant", "pchant", "powchant", "powerchant"],
+    "type" : "attack_buff",
+    "power" : 3,
+    "cost" : 5,
+    "users" : ["players"]
+  },
+  "defense chant" : {
+    "aliases" : ["defense chant", "dchant", "defchant", "defensechant", "defense sphere"],
+    "type" : "defense_buff",
+    "power" : 2,
+    "cost" : 10,
+    "users" : ["players"]
   }
+}
