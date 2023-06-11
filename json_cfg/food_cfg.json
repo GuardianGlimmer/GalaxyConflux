@@ -1,0 +1,14 @@
+{
+    "strawberry cupcake": {
+      "location" : "cafe",
+      "price" : 15,
+			"description" : "You recieve a pink cupcake. You're thinking that the fact its strawberry just because it's pink is offensive to you until you bite down and discover the TRUE strawberry at the core, hidden. The strawberry is frozen for some reason and is making the cupcake soggy.",
+			"hunger restored" : 12
+    },
+		"blueberry pancakes": {
+			"location" : "cafe",
+			"price" : 10,
+			"description" : "You gobble up the blueberry pancakes!",
+			"hunger restored" : 8
+		}
+  }
