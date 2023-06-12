@@ -438,7 +438,7 @@ async def cast_cmd(msg):
 			print(gcdb.getPlayerAttribute(msg.author.id, 'hunger'))
 			player.persist()
 			fisher.fishing = True
-			fisher.prompts = random.randrange(1, 2)
+			fisher.prompts = random.randrange(3, 15)
 			fisher.reward = fisher.prompts * random.randrange(10, 20)
 			response = "You take one of the free fishing lines and cast it out into the gentle waves."
 			await sent_message(msg, response)
@@ -449,7 +449,7 @@ async def cast_cmd(msg):
 					response = random.choice(fishingresponses)
 					await sent_message(msg, response)
 					fisher.prompts -= 1
-					await asyncio.sleep(45)
+					await asyncio.sleep(25)
 					continue
 				else:
 					fisher.bite = True
@@ -634,7 +634,7 @@ async def learn_spell(msg):
 	if target_spell_name in gccfg.spell_map:
 		spell = gccfg.spell_map[target_spell_name]
 		player = GCPlayer(userid=msg.author.id)
-		item = GCItem(target_item)
+		item = GCItem(id=target_item)
 		print(item.known_spells)
 		knownspellslen = len(item.known_spells)
 		print(knownspellslen)
@@ -812,7 +812,9 @@ async def equip_cmd(msg):
 	player = GCPlayer(msg.author.id)
 	items = gcdb.finditems("equipper", player.userid)
 	if items is not False:
-		gcdb.setItemAttribute(items.item_id, 'adorner', 0)
+		for item_data in items:
+			item_id = item_data["id"]
+			gcdb.setItemAttribute(item_id, 'equipper', 0)
 	item_id = int(msg.content.split(' ', 1)[1])
 	item_name = gcdb.getItemAttribute(item_id, 'name')
 	equippeditem = gccfg.casting_map.get(item_name)

@@ -2,7 +2,10 @@
 import discord
 
 # create client here so that its global
-client = discord.Client()
+# create client here so that its global
+intents = discord.Intents.default()
+intents.message_content = True
+client = discord.Client(intents=intents)
 
 cmd_prefix = "~"
 

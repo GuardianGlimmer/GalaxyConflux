@@ -119,10 +119,10 @@
 			"command_names": ["inspect"],
 			"function": "inspect_cmd"
 		},
-    "adorn_cmd" : {
-      "command_names": ["adorn", "wear", "puton"],
-      "function": "adorn_cmd"
-    },
+        "adorn_cmd" : {
+        "command_names": ["adorn", "wear", "puton"],
+        "function": "adorn_cmd"
+        },
 		"fashion_cmd" :  {
 			"command_names": ["fashion", "drip"],
 			"function": "fashion_cmd"
@@ -134,5 +134,9 @@
 		"command_map_cmd" : {
 			"command_names": ["cmds", "commands"],
 			"function": "cmds_cmd"
+		},
+		"equip_cmd" : {
+			"command_names": ["equip"],
+			"function": "equip_cmd"
 		}
 }
