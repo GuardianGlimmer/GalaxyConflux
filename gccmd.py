@@ -610,7 +610,7 @@ async def list_spells(msg):
 async def known_spells(msg):
 	# compile all user usable spell names
 	player = GCPlayer(userid=msg.author.id)
-	item = GCItem(id = msg.author.id)
+	item = GCItem(equipper = msg.author.id)
 	player_spells = []
 	for spell_name in item.known_spells:
 		if spell_name in gccfg.spell_map:
