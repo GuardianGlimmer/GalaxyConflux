@@ -610,8 +610,9 @@ async def list_spells(msg):
 async def known_spells(msg):
 	# compile all user usable spell names
 	player = GCPlayer(userid=msg.author.id)
+	item = GCItem(id = msg.author.id)
 	player_spells = []
-	for spell_name in player.known_spells:
+	for spell_name in item.known_spells:
 		if spell_name in gccfg.spell_map:
 			player_spells.append(gccfg.spell_map[spell_name])
 
@@ -634,16 +635,11 @@ async def learn_spell(msg):
 	if target_spell_name in gccfg.spell_map:
 		spell = gccfg.spell_map[target_spell_name]
 		player = GCPlayer(userid=msg.author.id)
-		item = GCItem(id=target_item)
-		print(item.known_spells)
+		item = GCItem(id=int(target_item))
 		knownspellslen = len(item.known_spells)
-		print(knownspellslen)
 		item_type = item.itemtype
-		print(item_type)
 		learningitem = gccfg.casting_map.get(item_type)
-		print(learningitem)
-		learncost = learningitem.level_cost
-		print(learncost)
+		learncost = learningitem.level_cost * 50
 		spelllim = learningitem.spell_capacity
 		if spell in item.known_spells:
 			response = "the item already has that spell bound to it!"

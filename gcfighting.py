@@ -1,7 +1,7 @@
 import asyncio
 import random
 import gccfg
-from gcclasses import GCPlayer
+from gcclasses import GCPlayer, GCItem
 from gcclasses import GCEnemy
 import gcdb
 import gcutility
@@ -47,7 +47,7 @@ async def initiate_combat(enemy, player, msg):
 			response += "\n but {} has now joined the battle!".format(
 			 msg.author.display_name)
 			existing.player_ids.append(player.userid)
-			existing.pts_remaining[player.userid] = gccfg.pts_per_round
+			existing.pts_remaining[player.userid] = int((gccfg.casting_map.get((GCItem(equipper = player.userid)).itemtype)).spell_points)
 		if enemy.id not in existing.enemy_ids:
 			# Add target to fight if they were not already involved
 			response += "\n but {} has now joined the battle!".format(enemy.name)
@@ -61,7 +61,7 @@ async def initiate_combat(enemy, player, msg):
 	 location=enemy.location,
 	 enemy_ids=[enemy.id],
 	 player_ids=[player.userid],
-	 pts_remaining={player.userid: (gccfg.pts_per_round) * player.level})
+	 pts_remaining={player.userid: int((gccfg.casting_map.get((GCItem(equipper = player.userid)).itemtype)).spell_points)})
 
 	# Tell the user the fight started
 	start_msg = "{} prepares to begin combat with {}! They have 30s to prepare attacks!".format(
@@ -240,6 +240,6 @@ async def initiate_combat(enemy, player, msg):
 		fight.enemy_queue = []
 		fight.player_queue = []
 		for uid in fight.pts_remaining:
-			fight.pts_remaining = {player.userid: (gccfg.pts_per_round) * player.level}
+			fight.pts_remaining = {player.userid: int((gccfg.casting_map.get((GCItem(equipper = player.userid)).itemtype)).spell_points)}
 		new_round_msg = "The players once again have 30s to prepare their spells..."
 		await botmessage(msg, new_round_msg)
